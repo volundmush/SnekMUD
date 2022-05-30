@@ -1,0 +1,8 @@
+classes:
+  connection: "snekmud.forge.connection.Connection"
+
+services:
+  link: "mudforge.forge.link.LinkService"
+  game: "snekmud.forge.game.GameService"
+
+main_function: "mudforge.gate.app.run_gate"
