@@ -28,6 +28,8 @@ class Exportable:
     direct_fields = []
     rich_fields = []
 
+    __slots__ = ["__weakref__", ]
+
     def export(self) -> dict:
         base = {k: getattr(self, k) for k in self.direct_fields}
         for f in self.rich_fields:
