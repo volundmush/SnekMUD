@@ -2,4 +2,5 @@ mudforge
 passlib
 tortoise-orm
 orjson
-argon2_cffi
+argon2-cffi
+dataclasses_json

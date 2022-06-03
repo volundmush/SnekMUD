@@ -53,3 +53,9 @@ class ThingDriver:
         self.inside: Optional[ref["Mobile"]] = None
         self.contents: WeakSet[ref["Thing"]] = WeakSet()
 
+class ThingInstanceDriver:
+    pass
+
+
+class ThingPrototypeDriver:
+    pass

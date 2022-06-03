@@ -4,7 +4,7 @@ classes:
   account: "snekmud.db.account.Account"
   mobile: "snekmud.db.mobile.Mobile"
   mobile_proto_driver: "snekmud.db.mobile.MobilePrototypeDriver"
-  character_instance_driver: "snekmud.db.mobile.MobileInstanceDriver"
+  mobile_instance_driver: "snekmud.db.mobile.MobileInstanceDriver"
   room: "snekmud.db.room.Room"
   room_driver: "snekmud.db.room.RoomDriver"
   exit: "snekmud.db.room.Exit"
@@ -26,9 +26,12 @@ hooks:
   post_stop: "snekmud.hooks.post_stop"
 
 command_handlers:
-  connection_login: "snekmud.commands.login.LoginHandler"
+  connection_login: "snekmud.commands.connection.login.LoginHandler"
+  connection_account: "snekmud.commands.connection.account.AccountHandler"
 
 commands:
   connection_login:
-    - "snekmud.commands.login.ConnectCommand"
-    - "snekmud.commands.login.CreateCommand"
+    - "snekmud.commands.connection.login.LOGIN_COMMANDS"
+  connection_account:
+    - "snekmud.commands.connection.menu.MENU_COMMANDS"
+    - "snekmud.commands.connection.account.ACCOUNT_COMMANDS"

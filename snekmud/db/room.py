@@ -23,26 +23,10 @@ class ExitDir(IntEnum):
 
     def reverse(self) -> "ExitDir":
         match self:
-            case ExitDir.NORTH:
-                return ExitDir.SOUTH
-            case ExitDir.EAST:
-                return ExitDir.WEST
-            case ExitDir.SOUTH:
-                return ExitDir.NORTH
-            case ExitDir.WEST:
-                return ExitDir.EAST
-            case ExitDir.UP:
-                return ExitDir.DOWN
-            case ExitDir.DOWN:
-                return ExitDir.UP
-            case ExitDir.NORTHWEST:
-                return ExitDir.SOUTHEAST
-            case ExitDir.NORTHEAST:
-                return ExitDir.SOUTHWEST
-            case ExitDir.SOUTHEAST:
-                return ExitDir.NORTHWEST
-            case ExitDir.SOUTHWEST:
-                return ExitDir.NORTHEAST
+            case ExitDir.NORTH | ExitDir.EAST | ExitDir.NORTHWEST | ExitDir.NORTHEAST:
+                return ExitDir(self+2)
+            case ExitDir.SOUTH | ExitDir.WEST | ExitDir.SOUTHEAST | ExitDir.SOUTHWEST:
+                return ExitDir(self-2)
             case ExitDir.INWARDS:
                 return ExitDir.OUTWARDS
             case ExitDir.OUTWARDS:
@@ -52,30 +36,14 @@ class ExitDir(IntEnum):
 
     def abbr(self) -> str:
         match self:
-            case ExitDir.NORTH:
-                return "N"
-            case ExitDir.EAST:
-                return "W"
-            case ExitDir.SOUTH:
-                return "S"
-            case ExitDir.WEST:
-                return "W"
-            case ExitDir.UP:
-                return "U"
-            case ExitDir.DOWN:
-                return "D"
-            case ExitDir.NORTHWEST:
-                return "NW"
-            case ExitDir.NORTHEAST:
-                return "NE"
-            case ExitDir.SOUTHEAST:
-                return "SE"
-            case ExitDir.SOUTHWEST:
-                return "SW"
+            case ExitDir.NORTH | ExitDir.EAST | ExitDir.SOUTH | ExitDir.WEST | ExitDir.UP | ExitDir.DOWN:
+                return self.name.lower()[0]
+            case ExitDir.NORTHWEST | ExitDir.NORTHEAST | ExitDir.SOUTHEAST | ExitDir.SOUTHWEST:
+                return self.name.lower()[0,5]
             case ExitDir.INWARDS:
-                return "I"
+                return "in"
             case ExitDir.OUTWARDS:
-                return "O"
+                return "out"
             case _:
                 return "--"
 
@@ -114,6 +82,30 @@ class RoomFlag(IntFlag):
 
 class SectorType(IntEnum):
     UNKNOWN = -1
+    INSIDE = 0
+    CITY = 1
+    PLAIN = 2
+    FOREST = 3
+    HILLS = 4
+    MOUNTAINS = 5
+    SHALLOWS = 6
+    WATER_FLY = 7
+    SKY = 8
+    UNDERWATER = 9
+    SHOP = 10
+    IMPORTANT = 11
+    DESERT = 12
+    SPACE = 13
+    LAVA = 14
+
+    def abbr(self) -> str:
+        match self:
+            case SectorType.SHOP:
+                return "$"
+            case SectorType.IMPORTANT:
+                return "#"
+            case _:
+                return self.name[0]
 
 
 @dataclass_json
@@ -124,7 +116,7 @@ class Room:
     name: Text = field(default=Text("New Room"), metadata=config(encoder=lambda x: x.serialize(), decoder=Text.deserialize))
     description: Text = field(default=Text("No description yet."), metadata=config(encoder=lambda x: x.serialize(), decoder=Text.deserialize))
     flags: int = 0
-    exits: Dict[ExitDir, Exit] = dict()
+    exits: Dict[ExitDir, Exit] = field(default_factory=dict)
 
 
 class RoomDriver:

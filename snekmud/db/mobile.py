@@ -1,48 +1,60 @@
-from typing import Optional, Union, Any
+from typing import Optional, Union, Any, Dict
 from weakref import WeakValueDictionary, ref
 from rich.text import Text
 from snekmud.misc import Sex, Size
 from snekmud.commands.base import HasCommandHandler
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 
+@dataclass_json
+@dataclass(slots=True)
+class Mobile:
+    vnum: int = -1
+    character_id: Optional[str] = None
+    account_id: Optional[str] = None
+    location: Optional[int] = None
+    home: Optional[int] = None
+    saved_locations: Dict[str, int] = field(default_factory=dict)
+    name: Text = field(default=Text("Nameless Mobile"), metadata=config(encoder=lambda x: x.serialize(), decoder=Text.deserialize))
 
-class Mobile(HasCommandHandler):
+class _MobileDriver:
 
-    __slots__ = ["vnum", "character_id", "location", "saved_locations", "active", "name", "short_desc", "long_desc",
-                 "desc", "title", "size", "sex", "gender", "play_session",
-                 "cmd_handler"]
+    __slots__ = ["__weakref__", "mobile"]
 
-    def __init__(self):
-        self.vnum: int = -1
-        self.character_id: Optional[str] = None
-        self.location: Optional[ref["Room"]] = None
-        self.saved_locations: WeakValueDictionary[str, ref["Room"]] = WeakValueDictionary()
+    def __str__(self):
+        return str(self.mobile.name)
 
-        # a character that isn't active is in a suspended state. It is loaded into memory, but not participating in the
-        # game simulation. It should be stored Nowhere if it isn't active. Do not process buffs/debuffs, tick down timers, etc.
-        self.active: bool = False
+class MobilePrototypeDriver(_MobileDriver):
 
-        self.name: Text = Text("Nameless Mobile")
-        self.short_desc: Optional[Text] = None
-        self.long_desc: Optional[Text] = None
-        self.desc: Optional[Text] = None
-        self.title: Optional[Text] = None
+    __slots__ = ["instances"]
 
-        self.size: Size = Size.UNDEFINED
-        self.sex: Sex = Sex.OTHER
-        self.gender: Sex = Sex.OTHER
+    def __init__(self, mobile):
+        self.mobile = mobile
+        self.instances = dict()
 
-        self.play_session: Optional[ref["PlaySession"]] = None
+class MobileInstanceDriver(_MobileDriver, HasCommandHandler):
 
+    __slots__ = ["instance_id", "session", "cmd_handler"]
+
+    def __init__(self, mobile, instance_id: str):
+        self.mobile = mobile
+        self.instance_id = instance_id
+        self.session: Optional[ref["Session"]] = None
         self.cmd_handler: Optional["BaseMobileCommandHandler"] = None
+        self.location: Optional[ref["Room"]] = None
+
+    def __str__(self):
+        return str(self.mobile)
 
     def is_player(self):
-        return self.character_id is not None
+        return self.mobile.character_id is not None
 
     async def msg(self, line: Optional[Union[str, Text]]=None, text: Optional[Union[str, Text]]=None,
-                  source: Optional[Any]=None, system_msg: bool=True, channel=None):
+                  source: Optional[Any]=None, system_msg: bool=True, channel=None, gmcp=None,
+                  highlighter: str = "null", **kwargs):
         if not self.play_session:
             return
-        if not line and not text:
+        if not line and not text and not gmcp:
             return
-        await self.play_session(line=line, text=text, source=source, relayed_by=[self, ], system_msg=system_msg,
-                                channel=channel)
+        await self.session(line=line, text=text, source=source, relayed_by=[self, ], system_msg=system_msg,
+                                channel=channel, gmcp=None, highlighter=highlighter, **kwargs)

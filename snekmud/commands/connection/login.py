@@ -1,7 +1,7 @@
 import re
 import snekmud
 
-from .base import Command, BaseCommandHandler
+from snekmud.commands.base import Command, BaseCommandHandler
 
 
 class LoginHandler(BaseCommandHandler):
@@ -81,3 +81,6 @@ class CreateCommand(_LoginCommand):
         name, password = self.parse_login(self.usage)
         await snekmud.GAME.accounts.create(name, password, source=self.user)
         await self.user.msg(text=f"User '{name}' created!")
+
+
+LOGIN_COMMANDS = [CreateCommand, ConnectCommand]

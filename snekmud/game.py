@@ -22,7 +22,7 @@ class AccountManager:
         self.dir = os.path.join(os.getcwd(), "accounts")
         pathlib.Path(self.dir).mkdir(exist_ok=True)
 
-    async def create(self, name: str, password: str, source: str=None) -> "Account":
+    async def create(self, name: Union[Text, str], password: str, source: str=None) -> "Account":
         if not self.re_name.match(name):
             raise ValueError("Account names must be simple.")
         if not password:
@@ -30,19 +30,22 @@ class AccountManager:
         if await self.find(name, exact=True):
             raise ValueError("That account already exists!")
         acc_id = generate_name("acc", snekmud.ACCOUNTS.keys(), gen_length=8)
-        acc = snekmud.CLASSES["account"]()
-        acc.account_id = acc_id
-        acc.name = name
+        acc_driver = snekmud.CLASSES["account_driver"]
+        if isinstance(name, str):
+            name = Text(name)
+        acc = acc_driver(snekmud.CLASSES["account"](account_id=acc_id, name=name))
+        await acc.set_password(password=password)
         if len(snekmud.ACCOUNTS) == 0:
-            acc.supervisor_level = 1000
+            acc.account.supervisor_level = 1000
         snekmud.ACCOUNTS[acc_id] = acc
 
-    async def find(self, name: str, exact=False) -> Optional["Account"]:
+    async def find(self, name: Union[Text, str], exact=False) -> Optional["Account"]:
+        name = str(name)
         if not exact:
             return partial_match(name, snekmud.ACCOUNTS.values())
         n = name.upper()
         for v in snekmud.ACCOUNTS.values():
-            if v.name.upper() == n:
+            if str(v).upper() == n:
                 return v
 
     async def delete(self, account: Union[str, "Account"]):
@@ -59,6 +62,7 @@ class AccountManager:
     async def load(self) -> int:
         p = pathlib.Path(self.dir)
         acc_class = snekmud.CLASSES["account"]
+        acc_driver = snekmud.CLASSES["account_driver"]
         search = p.glob("*.json")
         counter = 0
         for j in search:
@@ -66,9 +70,8 @@ class AccountManager:
                 data = orjson.loads(f.read())
                 if "account_id" not in data:
                     continue
-                acc = acc_class()
-                acc.load(data)
-                snekmud.ACCOUNTS[acc.account_id] = acc
+                acc = acc_driver(acc_class.from_dict(data))
+                snekmud.ACCOUNTS[acc.account.account_id] = acc
                 counter += 1
         return counter
 
@@ -82,7 +85,7 @@ class AccountManager:
                 continue
             fp = p.joinpath(f"{k}.json")
             with fp.open(mode="wb") as f:
-                f.write(orjson.dumps(v.export()))
+                f.write(orjson.dumps(v.account.to_dict()))
                 f.flush()
             counter += 1
         return counter
@@ -96,27 +99,28 @@ class CharacterManager:
         self.dir = os.path.join(os.getcwd(), "characters")
         pathlib.Path(self.dir).mkdir(exist_ok=True)
 
-    async def create(self, name: Text, account: "Account") -> "Character":
+    async def create(self, name: Union[str, Text], account: "Account") -> "MobileInstanceDriver":
         if not self.re_name.match(name.plain):
             raise ValueError("Character names must be simple.")
         if not account:
             raise ValueError("Must include an Account.")
         if await self.find(name, exact=True):
             raise ValueError("That character already exists!")
+        if isinstance(name, str):
+            name = Text(name)
         char_id = generate_name("char", snekmud.CHARACTERS.keys(), gen_length=8)
-        char = snekmud.CLASSES["character"]()
-        char.account_id = char_id
-        char.name = name
-        if len(snekmud.CHARACTERS) == 0:
-            char.supervisor_level = 1000
-        snekmud.CHARACTERS[char_id] = char
+        char = snekmud.CLASSES["mobile"](account_id=account.account_id, name=name)
+        character = snekmud.CLASSES["mobile_instance_driver"](char, char_id)
+        snekmud.CHARACTERS[char_id] = character
+        return character
 
-    async def find(self, name: Union[str, Text], exact=False) -> Optional["Character"]:
+    async def find(self, name: Union[str, Text], exact=False) -> Optional["MobileInstanceDriver"]:
+        name = str(name)
         if not exact:
-            return partial_match(str(name), snekmud.CHARACTERS.values())
-        n = str(name).upper()
+            return partial_match(name, snekmud.CHARACTERS.values())
+        n = name.upper()
         for v in snekmud.CHARACTERS.values():
-            if str(v.name).upper() == n:
+            if str(v).upper() == n:
                 return v
 
     async def delete(self, character: Union[str, "Character"]):
@@ -125,14 +129,15 @@ class CharacterManager:
                 raise ValueError("Account Deletion requires either an Account or its ID.")
             character = snekmud.CHARACTERS.get(character, None)
             if not character:
-                raise ValueError("Account by ID not found.")
+                raise ValueError("Character by ID not found.")
         character.delete()
         file_name = os.path.join(self.dir, f"{character.character_id}.json")
         os.remove(file_name)
 
     async def load(self) -> int:
         p = pathlib.Path(self.dir)
-        char_class = snekmud.CLASSES["character"]
+        char_class = snekmud.CLASSES["mobile"]
+        char_driver = snekmud.CLASSES["mobile_instance_driver"]
         search = p.glob("*.json")
         counter = 0
         for j in search:
@@ -140,9 +145,9 @@ class CharacterManager:
                 data = orjson.loads(f.read())
                 if "character_id" not in data:
                     continue
-                character = char_class()
-                character.load(data)
-                snekmud.CHARACTERS[character.character_id] = character
+                char = char_class.from_dict(data)
+                character = char_driver(char, char.character_id)
+                snekmud.CHARACTERS[char.character_id] = character
                 counter += 1
         return counter
 

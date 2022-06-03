@@ -17,8 +17,15 @@ async def pre_start(entrypoint=None, services=None):
 
     command_counter = 0
     for category, entries in snekmud.CONFIG.get("commands", dict()).items():
-        snekmud.COMMANDS[category] = [import_from_module(c) for c in entries]
-        command_counter += len(entries)
+        imported = [import_from_module(c) for c in entries]
+        total_commands = list()
+        for c in imported:
+            if isinstance(c, list):
+                total_commands.extend(c)
+            else:
+                total_commands.append(c)
+        snekmud.COMMANDS[category] = total_commands
+        command_counter += len(total_commands)
 
     logging.info(f"Found {command_counter} commands in {len(snekmud.COMMANDS)} categories.")
 
