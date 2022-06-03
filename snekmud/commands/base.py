@@ -9,6 +9,7 @@ import time
 from rich.traceback import Traceback
 from rich.highlighter import ReprHighlighter
 
+
 class CommandException(Exception):
     pass
 
@@ -97,12 +98,13 @@ class PyCommand(Command):
     def available_vars(self):
         return {
             "game": snekmud.GAME,
-            "snek_api": snekmud
+            "snek_api": snekmud,
+            "cmd_entry": self.entry
         }
 
     @classmethod
     async def access(cls, entry):
-        return entry.get_slevel() >= 10
+        return entry.get_slevel(ignore_spoof) >= 10
 
     def flush(self):
         pass
@@ -178,11 +180,11 @@ class BaseCommandHandler:
     async def start(self):
         pass
 
-    async def get_special_commands(self) -> List["Command_Class"]:
+    async def get_special_commands(self, cmd: CommandEntry) -> List["Command_Class"]:
         return list()
 
     async def special_match(self, cmd: CommandEntry) -> Optional[Tuple["Command", "Match"]]:
-        for c in await self.get_special_commands():
+        for c in await self.get_special_commands(cmd):
             if (match := await c.match(cmd)):
                 return c, match
 
@@ -198,7 +200,7 @@ class BaseCommandHandler:
         await self.owner.msg(line=f"No command for: {cmd.text if len(cmd.text) < 20 else cmd.text[0:20] + '...'}. Type 'help' for help!")
 
     async def normal_match(self, cmd: CommandEntry) -> Optional[Tuple["Command", "Match"]]:
-        for c in await self.get_commands():
+        for c in await self.get_commands(cmd):
             if (match := await c.match(cmd)):
                 return c, match
 
@@ -214,8 +216,8 @@ class BaseCommandHandler:
     async def cleanup(self):
         pass
 
-    async def get_commands(self) -> List["Command_Class"]:
-        return snekmud.COMMANDS.get(self.category, list())
+    async def get_commands(self, cmd: CommandEntry) -> List["Command_Class"]:
+        return [c for c in snekmud.COMMANDS.get(self.category, list()) if await c.access(cmd)]
 
     async def update(self):
         """
@@ -228,29 +230,9 @@ class BaseConnectionCommandHandler(BaseCommandHandler):
     pass
 
 
-class LoginHandler(BaseConnectionCommandHandler):
-    category = "connection_login"
-
-
-class AccountHandler(BaseConnectionCommandHandler):
-    category = "connection_account"
-
-
-class SessionHandler(BaseConnectionCommandHandler):
-    category = "connection_session"
-
-
 class BasePlaySessionCommandHandler(BaseCommandHandler):
     pass
 
 
-class PlayHandler(BasePlaySessionCommandHandler):
-    category = "playhandler_play"
-
-
 class BaseMobileCommandHandler(BaseCommandHandler):
     pass
-
-
-class MobileHandler(BaseMobileCommandHandler):
-    category = "mobile_mobile"

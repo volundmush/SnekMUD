@@ -35,3 +35,6 @@ commands:
   connection_account:
     - "snekmud.commands.connection.menu.MENU_COMMANDS"
     - "snekmud.commands.connection.account.ACCOUNT_COMMANDS"
+  connection_session:
+    - "snekmud.commands.connection.account.ACCOUNT_COMMANDS"
+    - "snekmud.commands.connection.session.SESSION_COMMANDS"

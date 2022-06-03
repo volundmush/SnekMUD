@@ -3,6 +3,7 @@ import os
 import glob
 import pathlib
 import re
+import logging
 from typing import List, Optional, Dict, Union, Set
 from weakref import WeakValueDictionary, ref, WeakSet
 from rich.text import Text
@@ -35,7 +36,8 @@ class AccountManager:
             name = Text(name)
         acc = acc_driver(snekmud.CLASSES["account"](account_id=acc_id, name=name))
         await acc.set_password(password=password)
-        if len(snekmud.ACCOUNTS) == 0:
+        if not len(snekmud.ACCOUNTS):
+            logging.info(f"Granting Account {name.plain} root supervisor privileges.")
             acc.account.supervisor_level = 1000
         snekmud.ACCOUNTS[acc_id] = acc
 
@@ -184,3 +186,12 @@ class GameService(OldGame):
         for k in no_match:
             snekmud.CHARACTERS.pop(k, None)
         return no_match
+
+    async def create_or_join_session(self, cmd: "CommandEntry", character: "MobileInstanceDriver"):
+        if not (char_id := character.mobile.character_id):
+            raise ValueError("That is not a player character!")
+        if not (session := snekmud.SESSIONS.get(char_id, None)):
+            session = snekmud.CLASSES["session"](cmd.connection.user, character)
+            snekmud.SESSIONS[char_id] = session
+            await session.on_init()
+        await session.add_connection(cmd.connection)
