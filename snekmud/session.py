@@ -1,46 +1,59 @@
 import time
 import snekmud
 from typing import List, Optional, Dict, Any, Union
-from weakref import WeakValueDictionary, ref, WeakSet
+from weakref import WeakValueDictionary, ref, WeakSet, proxy
 from rich.text import Text
 from enum import IntFlag, IntEnum
 from snekmud.commands.base import HasCommandHandler
+from snekmud.utils.comms import ActType, act
+
 
 class Session(HasCommandHandler):
 
-    def __init__(self, account: "AccountDriver", character: "MobileInstanceDriver"):
+    def __init__(self, account: "AccountDriver", character: "CharacterInstanceDriver"):
         self.connections: Optional[WeakValueDictionary[str, ref["Connection"]]] = WeakValueDictionary()
-        self.account: ref["AccountDriver"] = weakref.ref(account)
-        self.character: ref["MobileInstanceDriver"] = weakref.ref(character)
-        self.puppet: ref["MobileInstanceDriver"] = weakref.ref(character)
+        self.account: proxy["AccountDriver"] = proxy(account)
+        self.character: proxy["CharacterInstanceDriver"] = proxy(character)
+        self.puppet: proxy["CharacterInstanceDriver"] = proxy(character)
         self.created = time.time()
         self.last_user_input = time.time()
         self.cmd_handler: Optional["BaseCommandHandler"] = None
         self.started = False
+        character.session = proxy(self)
 
     async def on_init(self):
-        self.set_cmd_handler(snekmud.COMMAND_HANDLERS["session_mobile"])
+        await self.set_cmd_handler(snekmud.COMMAND_HANDLERS["session_character"])
 
     async def add_connection(self, conn: "Connection"):
         conn.session = self
         self.connections[conn.details.client_id] = conn
-        conn.set_cmd_handler(snekmud.COMMAND_HANDLERS["connection_session"])
-        if self.started:
+        await conn.set_cmd_handler(snekmud.COMMAND_HANDLERS["connection_session"])
+        if not self.started:
             self.started = True
             await self.on_first_connect(conn)
         await self.on_add_connection(conn)
 
     async def prepare_character(self):
-        pass
+        await self.puppet.set_cmd_handler(snekmud.COMMAND_HANDLERS["character_action"])
+        location, err = await self.puppet.get_login_room()
+        if location:
+            await self.puppet.do_move(destination=location)
+            await act("$n has entered the game.", actor=self.puppet, act_type=ActType.TO_ROOM)
+        if err:
+            await self.puppet.msg(line=err, system_msg=True)
 
     async def on_first_connect(self, conn: "Connection"):
         await self.prepare_character()
 
     async def on_add_connection(self, conn: "Connection"):
-        pass
+        if self.puppet.location:
+            rendered = await self.puppet.render_room(self.puppet.location)
+            await self.puppet.msg(line=rendered, system_msg=True)
+        else:
+            await self.puppet.msg(line="You drift in the void...", system_msg=True)
 
     def session_id(self):
-        return self.character.mobile.character_id
+        return self.character.character.character_id
 
     def __str__(self):
         return self.session_id()
@@ -56,6 +69,7 @@ class Session(HasCommandHandler):
         out = {}
         out["character"] = self.character
         out["puppet"] = self.puppet
+        out["self"] = self.puppet
         return out
 
     def get_idle_time(self):

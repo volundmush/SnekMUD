@@ -1,0 +1,396 @@
+#1 Welcome Back!
+@cUpdated By@D: @CIovan         @cDate@D: @YMon Jan  2 16:18:16 2012@n
+   Era four brings a few changes that are sure to be interesting to old and
+new players alike. First and formost if the release of planet Arlia and the
+Arlian race (along with sensei). On top of this there have been balance tweaks
+to the rate money is earned as well as the way humanoid NPCs deal with combat.
+Dragon Balls now have a selfishness meter that raises as more selfish wishes
+are made. Some wishes raise it faster than other wishes and only one wish
+lowers the meter (revival). When the meter passes a threshold the Dragon Balls
+crack and release the dark energy stored within them in the form of Shadow
+Dragons. These dragons spread out across the galaxy and must be defeated in
+order to free up the Dragon Balls once again. The Shadow Dragons will persist
+across MUD resets or the occasional crash. Lastly Dragon Ball hunters will
+occasionaly load when the Dragon Ball set loads and will be in possession of a
+ball themselves.
+
+   Those with ships or items that are applicable contact immortals if you desire
+them. We will not accept any late requests. You have until February 1st to
+reacquire these things.
+
+   Jinto also has a new technique to teach Hoshijin students. Star Nova
+#2 New Things
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Jan  3 19:47:26 2012@n
+1: You must now set carve to on to get steaks from killing animals. You must
+also pass a survival skill roll to successfully preserve the meat. 
+2: Survival skill is used for building fires instead of build skill
+3: Skills past skill level 50 will now have lower chances of auto-train per use.
+
+#3 Important Tournament Being Held
+@cUpdated By@D: @CIovan         @cDate@D: @YWed Jan  4 21:05:10 2012@n
+http://advent-truth.com/forum/index.php?showtopic=2663
+
+#4 New Area Released
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Jan  5 21:59:35 2012@n
+   A new area in the Afterlife has been released. Good luck finding it if you
+were unlucky enough to be dead in the first place. Not for super low level
+characters either, so be careful.
+
+#5 Tournament Matches
+@cUpdated By@D: @CSamael        @cDate@D: @YThu Jan 12 19:41:43 2012@n
+The first batch of tournament matches has been released: http://advent-truth.com/forum/index.php?showtopic=2718 Read the thread to find out who your opponent will be. Remember, Friday 13th is the start of the tournament and each night of fighting begins at 10PM EST.
+
+#6 Arlian Evolution
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Jan 12 23:48:30 2012@n
+   The level costs for Arlian Evolution have been adjusted down for the most
+part. Past certain levels they will spike up but arlians below Evo Level 50
+should really notice a difference. Armor Index gains for Arlian Evolution have
+been ironed out a great deal more as well.
+
+#7 Arena
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Jan 15 19:21:58 2012@n
+You can now watch people in the arena. Read help arena for all the commands.
+
+#8 Hide and Steal
+@cUpdated By@D: @CIovan         @cDate@D: @YWed Jan 18 03:53:31 2012@n
+   Hide has been updated so that only specific actions or failure at actions
+will reveal you to people in the room. (Unless your hide skill is low and they
+can already spot you. ) The steal command has also been updated to be more
+balanced. Read 'help steal' for further information on it.
+
+#9 New Frigid Zone
+@cUpdated By@D: @CSamael        @cDate@D: @YThu Jan 19 07:15:33 2012@n
+   A new zone, or rather an expansion to an old one, has opened up on Frigid.
+Many Icerian intellects have long pondered what secrets Glug's Volcano holds
+and now you can find out. With the expansion of Glug's Volcano, the level
+range for NPCs in that area have been bumped up slightly, to better fit the
+dynamic of the planet also.
+
+#10 Limb Loss...
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Mar  1 19:33:30 2012@n
+You now only lose limbs from attacks that actually hurt you somewhat.
+
+#11 Website Down
+@cUpdated By@D: @CAndros        @cDate@D: @YMon Mar  5 16:33:14 2012@n
+
+The website is down for an unforseen ammount of time right now.
+
+#12 New Things Of Wonderous Wonderful Wonderment
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Mar  9 22:44:39 2012@n
+1: Mob Damage has been upped somewhat
+2: Damage Resistence has been nerfed somewhat (specifically armor and con). It hasn't been lowered a ton. Don't confuse the extent of this change with item 1.
+3: Suppression is no longer as obvious when you are scouted.
+4: Poison now prevents those poisoned from eating/drinking or charging ki.
+5: Tribeam now drains 5% of the user's current PL for every 1% over the minimum it is charged. This is added to the damage of the attack.
+6: You can now form NORMAL barriers at half the ki cost.
+7: Spar gains have been tweaked to never be capped unless your TNL is negative.
+8: The chances for limbs to be destroyed (instead of broken) have been lowered.
+#13 New things of newness
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Mar 11 21:14:20 2012@n
+The nolin function has been improved for those who use screen readers.
+@n @n
+   The Augmenter 9001 has been added to two high tech areas. With this nifty
+device you can permanantly raise a cardinal stat (such as strength) by 1 point.
+That is if you can afford the cost. This is for those who are rich and too
+lazy to weight train. The cost scales with the level of the stat.
+
+#14 Shamrock is back
+@cUpdated By@D: @CSamael        @cDate@D: @YMon Mar 12 22:33:52 2012@n
+   Shamrock, the Konatsu with more wealth than he knows what to do with, is
+taking off his reclusive shackles once again and appearing in public. What
+prizes are in store? Will Shamrock's usually jovial visits remain as such? 
+Only one way to find out!
+
+#15 Update Landing Change
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Apr 15 22:10:00 2012@n
+   When you go to land on a planet from space without a ship (using the land
+command) you will be asked where on the planet you want to land (you must type
+this out exactly as it is read). These location names match up with locations
+you would see via sense or scouter scans.
+ 
+   Truffles, Demons, Mutants, and Konatsus have been changed so that they have
+no RPP costs from level 40 or below (instead of 15 and below). This was done
+to increase the desirability for players to use these races more often. This
+may get tweaked in the future depending on the outcome.
+ 
+   A new build object has been added. This object allows the owner (who has it
+in their inventory) to detect the origin of SNET signals they receive (what
+location they came from). It is not easy to build.
+
+#16 Command Dig
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Apr 17 13:48:57 2012@n
+   The command dig has been added. In areas with dirt or sand you can now bury
+an item (like maybe a corpse, bag, whatever your imagination decides). 
+Whether you see a dirt mound from a buried object depends on your spot skill
+(you can try and uncover things whether you noticed a mound or not though).
+ 
+Also Kanassans have been added to the list of races with no RPP cost for leveling before level 40.
+
+#17 Voice and RPP Changes
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Apr 20 20:07:18 2012@n
+   Several RPP command options have had some changes either in cost or quality
+of effect. The voice command now only takes 1 RPP to change your voice is you
+already set it before.
+
+#18 RPP Menu
+@cUpdated By@D: @CIovan         @cDate@D: @YWed Apr 25 19:47:46 2012@n
+   The Custom Equipment option on the RPP menu has been automated. You can now
+build your own Custom Equipment (you don't choose stats though). As long as
+you have the 30 RPP necessary you can start working on a custom piece. When
+you go to quit the Custom Construction Menu it will ask you if you want to
+purchase the equipment you designed. It will only charge you if you select
+yes. Otherwise you will cancel and keep your RPP.
+ 
+   For those who have old customs built by imms you are to trade them in for 50
+RPP ASAP. You must then take 30 of that RPP and build yourself a new custom.
+
+#19 Androids and Sense
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Apr 28 01:44:49 2012@n
+   Absorb Androids have been slightly tweaked. Now their powerlevel regen from
+normal ticks has been reduced cosiderably and in its place they now regen part
+of the PL while absorbing from victim. They don't steal from the victim's
+powerlevel but instead convert some of the ki stolen into powerlevel (there is
+no drop in the ki stolen though).
+ 
+   Sense Androids have been majorly tweaked. All sense android transformation
+upgrades give larger increases than other android models. 
+ 
+Look forward to a change to balance out repair androids with these changes soon.
+ 
+   Lastly sense has been updated so that if you have dubbed someone when a
+sense message pops up (like sense scanning a planet or someone entering your
+area) you will be told who they are instead of it just being another generic
+signal detected.
+#20 Repair Androids
+@cUpdated By@D: @CIovan         @cDate@D: @YTue May  1 15:12:01 2012@n
+   Repair Androids now have the ability to repair all their worn equipment a
+good deal with their repair ability. This happens at the same time this
+ability restores their PL.
+ 
+   Addition: The repair ability now has a chance to increase the current ki of
+the repair droid now. If that ki is below maximum when repair is used.
+
+#21 Pushup, Situp, Meditate
+@cUpdated By@D: @CIovan         @cDate@D: @YFri May  4 09:12:30 2012@n
+   You now gain what you would gain from these everytime you do them. It's not
+a random chance to gain anymore. This may change depending on the effect it
+has. Consider it in place on a trial basis.
+
+#22 Instant Transmission
+@cUpdated By@D: @CIovan         @cDate@D: @YSat May 26 22:22:49 2012@n
+   It is no longer possible for someone who is below level 60 to enter the area
+that teaches Instant Transmission and learn it. I am sick of all the lowbies
+who have basically had Instant Transmission handed to them by higher level
+characters farming the shit needed for them and walking them through the quest.
+ 
+   You may still give the IT quest items to someone, but I caution you to do so
+sparingly. If I need to curb this issue more I will. It should be something
+people tend to earn on their own. Not something you basically gift wrap for
+anyone you know whether IC or not.
+
+#23 Prototype custom scouters
+@cUpdated By@D: @CSamael        @cDate@D: @YThu Jun 14 12:38:16 2012@n
+   Prototype custom scouters have been hit with the nerf gun, as they now have
+a level restriction placed upon them.
+
+#24 Future Expansion
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Jun 21 14:47:23 2012@n
+   I want to inform players that a future expansion is planned. This expansion
+will not only include new world content to explore but also skills, trainers,
+gameplay changes (such as how equipment drops and shop equipment are statted),
+bug fixes, and other new things.
+ 
+   This will @Rnot@n involve a player wipe. This expansion will come in all at
+once on a date yet to be announce, though that date will be announced soon, and
+it will have next to no negative impact on your playing experience. There will
+be no serious downtime involved. All code and gameplay suggestions should be
+made during the period before the expansion details are fully announced. You
+may do so in the appropriate suggestion boards on the forum.
+
+#25 Expansion
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Jul 10 20:44:53 2012@n
+http://advent-truth.com/forum/index.php?showtopic=3103&pid=8992&st=0&#entry8992
+
+#26 Custom Equipment
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Jul 10 20:47:57 2012@n
+   Due to equipment changes custom equipment prior to the expansion should be
+traded in as soon as possible. It will be refunded for the RPP it costed and a
+new one must be made immediatly upon receiving the RPP. When the custom has
+been rebuilt it will have 2 token slots in it.
+
+#27 boards
+@cUpdated By@D: @CIovan         @cDate@D: @YWed Aug  1 06:38:17 2012@n
+The MUD was down due to an error with the boards system.
+
+#28 @RWither - Read@n
+@cUpdated By@D: @CSamael        @cDate@D: @YThu Oct 18 12:30:43 2012@n
+   If you happen to have acquired Wither, do NOT use it on another player for
+the time being.
+
+#29 Wither Fixed
+@cUpdated By@D: @CIovan         @cDate@D: @YMon Oct 22 03:05:46 2012@n
+Wither has been fixed. That is all.
+
+#30 Cerria Quest Fix
+@cUpdated By@D: @CAndros        @cDate@D: @YMon Oct 22 12:48:00 2012@n
+The Cerria scripts have been fixed.  Anyone who has advanced on any quests involved on that planet need to report to Sedalis to have their characters updated to match the changes.  The quest will not respond correctly if you have already started EITHER side, and if benefits are derived due to it, it could be seen as bug abuse, so it is important that you report to Sedalis for checking even if you're unsure.  This only applies if you have already taken quests from that planet.
+
+#31 Halloween Event
+@cUpdated By@D: @CSamael        @cDate@D: @YWed Oct 31 14:39:18 2012@n
+Happy Halloween DBATers,
+
+   Although I will not be present, there will be a Halloween event for you to
+partake in at around Midnight tonight (EST) run by Sedalis. Just by turning
+up, you could score some sweet swag, so don't miss it.
+
+#32 Important Expansion Information
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Nov 23 21:52:13 2012@n
+Check out the news on the website for the details.
+
+#33 Customs/Rares/RPP Races
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Nov 24 15:51:03 2012@n
+http://advent-truth.com/forum/index.php?showtopic=3460
+
+#34 Website down
+@cUpdated By@D: @CAndros        @cDate@D: @YWed Dec  5 16:55:01 2012@n
+Yes, website is down. No, I don't know when it will be back up.
+
+#35 Website update
+@cUpdated By@D: @CAndros        @cDate@D: @YWed Dec  5 17:19:18 2012@n
+Website is working now. Xyron has paid for the server.
+
+#36 Steam
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Dec  6 19:41:56 2012@n
+   If you have a steam account I suggest you join DBAT's steam group. It helps
+keep everyone in contact as a community. Not only that, but I plan certain
+events and free games involving it in the future.
+ 
+http://steamcommunity.com/groups/advent-truth
+
+#37 Expansion Details
+@cUpdated By@D: @CIovan         @cDate@D: @YMon Dec 17 19:34:26 2012@n
+http://advent-truth.com/forum/index.php?showtopic=3520
+
+It's a new thread. Read it
+
+#38 New Traits
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Dec 27 01:57:25 2012@n
+http://advent-truth.com/forum/index.php?showtopic=3520&st=60&gopid=10633& entry10633
+
+#39 Skillslots
+@cUpdated By@D: @CSamael        @cDate@D: @YMon Feb  4 06:31:00 2013@n
+   Additional skillslots can now be purchased for 5 RPP via the RPP store. 
+Skillslot purchase is capped based on your total skillslots and whether you
+have the good memory trait or not. The cap with good memory is 45, otherwise
+the cap is 40.
+
+#40 Temp forum to use when the main site is down
+@cUpdated By@D: @CAndros        @cDate@D: @YTue Feb  5 19:39:05 2013@n
+I have set up a temp forum for use when ever the main site is down so the RPP keeps flowing. You can find it here: http://dbattemp.freeforums.org/
+
+#41 Martial Arts Tournament
+@cUpdated By@D: @CSamael        @cDate@D: @YThu Feb  7 07:34:22 2013@n
+A Galactic Martial Arts tournament will be taking place soon, check this thread for details: http://advent-truth.com/forum/index.php?showtopic=3785
+
+#42 Experience TNL Increases
+@cUpdated By@D: @CSamael        @cDate@D: @YFri Feb  8 03:46:02 2013@n
+   The experience required to level from level 40 onwards has been increased by
+the following percents (not exact, but close), 40-60: 25%, 60-80: 50%, 80-100:
+75%. These changes won't cause anyone to lose any levels, but you may notice
+you are a lot further away from your next level than previously.
+
+#43 Public Transport Upgrades
+@cUpdated By@D: @CSamael        @cDate@D: @YSat Feb 23 23:49:11 2013@n
+   The Celestial Corp Space Hub (a giant space station) has now been released.
+It is fully featured, containing just about everything a player could need. 
+The four existing public transport ships (falcon, simurgh, valkyrie and zypher)
+have had their routes updated to stop at the space hub (check their respective
+helpfiles). New ships are being added that only run between ONE planet and a
+space hub as well (see help pheonix for example).
+
+#44 New Additions Planned
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Mar 23 04:05:29 2013@n
+http://advent-truth.com/forum/index.php?showtopic=3911&st=0&gopid=12652& entry12652
+
+
+#45 Weapon changes
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Apr  2 23:54:51 2013@n
+http://advent-truth.com/forum/index.php?showtopic=3911&st=20&gopid=12744& entry12744
+ 
+IMPORTANT: Anyone with an existing custom weapon should have it exchanged for RPP and remake the weapon so that the minimum level requirement is on that weapon. Get in contact with an IMM ASAP. Not taking care of this ASAP will lead us to assume you are cheating.
+
+#46 NOOOOOOO
+@cUpdated By@D: @CIovan         @cDate@D: @YThu May  2 03:28:24 2013@n
+   Samael wiped out the new weapon changes. I'll have to put them back in
+later tonight or tomorrow. Should be stable in the meantime though.
+
+#47 Combo
+@cUpdated By@D: @CIovan         @cDate@D: @YFri May  3 23:28:34 2013@n
+Combo has been changed so that it has a base maxmimum of hits at the usual 20 mark,
+but you gain +1 max attacks to the combo for every MASTERED physical attack skill you
+have (basic skills). Combo now includes tailwhip, bash, and headbutt as well. Lastly
+you get special bonus attacks to your maximum depending on how many physical skills
+you have mastered.
+ 
+ You also will not have skills you do not have suggested as part of your combo. You
+must at least have three physical skills in order to combo though.
+
+#48 New Things
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Jun 14 00:27:46 2013@n
+New Changes (done have +)
+Rest will be done tonight or Saturday-Tuesday
+-----------
+ 
++1. Kanassan Glacial Walls have been fixed.
++2. Scouter reading style and informations have been changed
+3. Kiball has a chance to multishot based on level of mastery
+ 30% chance if fully mastered
+ 15% chance if skill level 75 or greater
+ 10% chance if skill level 50 or greater
+4. Kiblast has a chance to KO (if fully charged) based on level of mastery
+ 20% chance if fully mastered
+ 10% chance if skill level 75 or greater
+ 5% chance if skill level 50 or greater
+5. Beam has a chance to push from room and deal triple damage if the direction
+selected doesn't exist or is closed.
+ 20% chance if fully mastered
+ 10% chance if skill level 75 or greater
+ 5% chance if skill level 50 or greater
+6. Shogekiha has a chance to deal double damage to charging player
+ 20% chance if fully mastered
+ 10% chance if skill level 75 or greater
+ 5% chance if skill level 50 or greater
+7. Renzokou Energy Dan has a chance to have cost for strength reduced
+ 20% chance - 1/3rd cost and 20% chance 1/2 cost if mastered
+ 5% chance - 1/3rd cost and 20% chance 1/2 cost if skill lvl 75 or greater
+ 5% chance - 1/3rd cost and 10% chance 1/2 cost if skill lvl 50 or greater
++8. Tsuihidan has been fixed
+9. Tsuihidan has a chance to hit its target from behind (whether
+persuing or not) dealing damage normally as well as charged ki
+ 20% chance if fully mastered
+ 10% chance if skill level 75 or greater
+ 5% chance if skill level 50 or greater
++10. New Dragon Ball wish, Wish for 1-3 skill slots
+#49 Mob Tactics
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Jun 16 05:55:11 2013@n
+Several changes have taken place concerning mobs and several more are planned.
+ 
+   1: Non-humanoid mobs (like animals) have practically very little chance to
+ever parry an attack and generally have reduced defensive abilities for their
+levels (compared to humanoid)
+   2: Humanoid mobs (like... Humans) have an increased ability to parry at
+higher levels as well as having generally good defensive abilities based on
+their levels (dodge and block).
+   3: Certain mobs of certain races will be getting racial abilities to use
+when they need to. Same thing for certain skills. Right now this is limited
+to bioandroids regenerating (though within a day or so majins and nameks will
+do this as well). Demons will have the ability to curse players, kanassans to
+use hydromancy skills, and various other abilities (some new mob only ones).
+   4: There will also be some new enemy flags that can be attached by builders
+to give mobs more complex and potentially dangerous abilities. Like stealing
+from a player's inventory (though generally weaker NPCs who can easily be
+killed to reclaim the object), using restorative or buffing items/skills,
+following a player even across zones or planet to planet (if it's capable of
+such travel). These will not be on most mobs, but they will be on enough to
+make them a consideration.
+

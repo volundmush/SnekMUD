@@ -12,8 +12,7 @@ class SessionHandler(BaseCommandHandler):
         await self.owner.session.process_command_entry(cmd)
 
 
-
-class LogoutCommand(Command):
+class ExitCommand(Command):
     name = "@exit"
     syntax = "@exit"
     re_match = re.compile(r"^(?P<cmd>@exit)(?: +(?P<args>.+)?)?", flags=re.IGNORECASE)
@@ -23,4 +22,4 @@ class LogoutCommand(Command):
         force = mdict.get("args", '').lower() == "force"
         await self.entry.session.request_logout(force=force)
 
-SESSION_COMMANDS = []
+SESSION_COMMANDS = [ExitCommand, ]

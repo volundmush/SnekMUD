@@ -1,20 +1,10 @@
-from collections import defaultdict
-
-ZONES = dict()
-
 ACCOUNTS = dict()
 
 CHARACTERS = dict()
 
-MOBILE_PROTOTYPES = dict()
+ENTITY_INSTANCES = set()
 
-ROOMS = dict()
-
-THING_PROTOTYPES = dict()
-
-SCRIPT_PROTOTYPES = dict()
-
-SHOPS = dict()
+TRIGGER_INSTANCES = dict()
 
 FACTIONS = dict()
 
@@ -34,4 +24,20 @@ SESSIONS = dict()
 
 CONNECTIONS = dict()
 
+MODULES = dict()
+
 GAME = None
+
+INSTANCE_CLASSES = dict()
+
+PROTOTYPE_CLASSES = dict()
+
+PLAYER_PROTOTYPE = None
+
+# All Old-style VNUM data is below this.
+ZONES = dict()
+OBJECT_PROTOTYPES = dict()
+MOBILE_PROTOTYPES = dict()
+TRIGGER_PROTOTYPES = dict()
+ROOMS = dict()
+SHOPS = dict()

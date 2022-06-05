@@ -35,9 +35,9 @@ class CharSelectCommand(AccountMenuCommand):
 
     async def execute(self):
         mdict = self.match_obj.groupdict()
-        acc = self.entry.connection.account
+        acc = self.entry.connection.user
 
-        if not (chars := acc.get_characters()):
+        if not (chars := await acc.get_characters()):
             raise CommandException("No characters to join the game as!")
         if not (args := mdict.get("args", None)):
             names = ", ".join([str(obj) for obj in chars])

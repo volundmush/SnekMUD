@@ -1,0 +1,13 @@
+{
+  "player_character": {
+    "entity_type": 2,
+    "level": 1,
+    "description": "A new player character.",
+    "character_data": {
+      "title": "The untitled."
+    },
+    "physics_data": {
+      "size": -1
+    }
+  }
+}

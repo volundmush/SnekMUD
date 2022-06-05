@@ -2,16 +2,33 @@ classes:
   connection: "snekmud.connection.Connection"
   account_driver: "snekmud.db.account.AccountDriver"
   account: "snekmud.db.account.Account"
-  mobile: "snekmud.db.mobile.Mobile"
-  mobile_proto_driver: "snekmud.db.mobile.MobilePrototypeDriver"
-  mobile_instance_driver: "snekmud.db.mobile.MobileInstanceDriver"
   room: "snekmud.db.room.Room"
   room_driver: "snekmud.db.room.RoomDriver"
   exit: "snekmud.db.room.Exit"
   exit_driver: "snekmud.db.room.ExitDriver"
-  thing: "snekmud.db.thing.Thing"
-  thing_proto_driver: "snekmud.db.thing.ThingPrototypeDriver"
-  thing_instance_driver: "snekmud.db.thing.ThingInstanceDriver"
+  zone: "snekmud.db.zone.Zone"
+  zone_driver: "snekmud.db.zone.ZoneDriver"
+  session: "snekmud.session.Session"
+  module: "snekmud.db.module.Module"
+  entity: "snekmud.db.entity.Entity"
+
+prototypes:
+  junk: "snekmud.db.entity.EntityPrototypeDriver"
+  character: "snekmud.db.character.CharacterPrototypeDriver"
+  item: "snekmud.db.item.ItemPrototypeDriver"
+  celestial_body: "snekmud.db.celestial.CelestialBodyPrototypeDriver"
+  region: "snekmud.db.region.RegionPrototypeDriver"
+  vehicle: "snekmud.db.vehicle.VehiclePrototypeDriver"
+  sector: "snekmud.db.sector.SectorPrototypeDriver"
+
+instances:
+  junk: "snekmud.db.entity.EntityInstanceDriver"
+  character: "snekmud.db.character.CharacterInstanceDriver"
+  item: "snekmud.db.item.ItemInstanceDriver"
+  celestial_body: "snekmud.db.celestial.CelestialBodyInstanceDriver"
+  region: "snekmud.db.region.RegionInstanceDriver"
+  vehicle: "snekmud.db.vehicle.VehicleInstanceDriver"
+  sector: "snekmud.db.sector.SectorInstanceDriver"
 
 services:
   link: "mudforge.forge.link.LinkService"
@@ -28,6 +45,9 @@ hooks:
 command_handlers:
   connection_login: "snekmud.commands.connection.login.LoginHandler"
   connection_account: "snekmud.commands.connection.account.AccountHandler"
+  connection_session: "snekmud.commands.connection.session.SessionHandler"
+  session_character: "snekmud.commands.session.character.CharacterHandler"
+  character_action: "snekmud.commands.character.action.ActionHandler"
 
 commands:
   connection_login:
@@ -38,3 +58,10 @@ commands:
   connection_session:
     - "snekmud.commands.connection.account.ACCOUNT_COMMANDS"
     - "snekmud.commands.connection.session.SESSION_COMMANDS"
+  session_character:
+    - "snekmud.commands.session.character.CHARACTER_COMMANDS"
+  character_action:
+    - "snekmud.commands.character.action.ACTION_COMMANDS"
+
+rooms:
+  global_start: 300

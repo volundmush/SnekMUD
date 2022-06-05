@@ -1,7 +1,7 @@
 import re
 import snekmud
 
-from snekmud.commands.base import Command, BaseCommandHandler
+from snekmud.commands.base import Command, BaseCommandHandler, CommandException
 
 
 class LoginHandler(BaseCommandHandler):
@@ -25,14 +25,14 @@ class _LoginCommand(Command):
     def parse_login(self, error):
         mdict = self.match_obj.groupdict()
         if not mdict["args"]:
-            raise ValueError(error)
+            raise CommandException(error)
 
         result = self.re_quoted.match(mdict["args"])
         if not result:
             result = self.re_unquoted.match(mdict["args"])
         rdict = result.groupdict()
         if not (rdict["name"] and rdict["password"]):
-            raise ValueError(error)
+            raise CommandException(error)
         return rdict["name"], rdict["password"]
 
 
@@ -83,4 +83,19 @@ class CreateCommand(_LoginCommand):
         await self.user.msg(text=f"User '{name}' created!")
 
 
-LOGIN_COMMANDS = [CreateCommand, ConnectCommand]
+class ImportCommand(Command):
+    name = "import"
+    syntax = "import <path>"
+    re_match = re.compile(r"^(?P<cmd>import)(?: +(?P<args>.+)?)?", flags=re.IGNORECASE)
+
+    async def execute(self):
+        if snekmud.ACCOUNTS:
+            raise CommandException(f"This can only be used with an empty database!")
+        from snekmud.profile_template.convert import GameImporter
+        mdict = self.match_obj.groupdict()
+        importer = GameImporter(mdict.get("args", "lib"))
+        await importer.run()
+        await self.entry.connection.msg(line="Import complete!", system_msg=True)
+
+
+LOGIN_COMMANDS = [CreateCommand, ConnectCommand, ImportCommand]

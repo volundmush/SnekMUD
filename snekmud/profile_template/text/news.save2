@@ -1,0 +1,214 @@
+#1 Welcome to Era 7!
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Jan  8 19:00:21 2015@n
+Note The following:
+ 
+   1: The new ship changes will not be in until sometime this weekend. Sorry,
+but it was either delay opening again or let you guys wait on that. 
+   2: The new custom skill system won't be ready until at least february. 
+Sorry on that. Too. 
+   3: The new custom equipment changes will not be in until sometime near the
+end of this month. 
+   4: Age now affects your height/weight. If you are younger than 17 then your
+height/weight is adjusted by what age you are. As you age you will grow into
+your mature height/weight (selected in CC. )
+   5: Testers, to collect your stuff you will have to wait until this weekend.
+I will set it up so that imms can reward testers appropriately. 
+ 
+Everyone try to have fun, follow the rules, report any bugs that got missed, and good luck!
+
+#2 Minor update to heal, buffing and build
+@cUpdated By@D: @CAndros        @cDate@D: @YSun Jan 11 17:20:56 2015@n
+Nail has been fixed and now requires you to be a Namek to gain EXP on heal. Heal has a 1 in 3 chance to give 0.5% TNL when used on a group member while in non-spar combat.
+ 
+Buffing has been tweaked and also has a 1 in 3 chance to reward 5% TNL on grouped party member that needs a buff.
+ 
+Truffle Build has been tweaked and has a 20% less chance to give EXP. Objects must have a value of 500 or more to give EXP.
+
+#3 Two new commands, selfalias and checkalias!
+@cUpdated By@D: @CAndros        @cDate@D: @YFri Jan 16 15:55:53 2015@n
+http://advent-truth.com/forum/topic/5556-objects-or-mobs-that-say-true-names/
+
+#4 Ships Name/Landing
+@cUpdated By@D: @CIovan         @cDate@D: @YWed Jan 21 15:48:37 2015@n
+   You can now nickname your ship (must be in the same room as the hatch) using
+the nickname command. 
+ 
+   Saiyan Pods can land in zones (this will be getting more options soon enough
+as well). Simply use 'pilot land' to see the zones available and then 'pilot
+land (zone name)' to land there.
+
+#5 Ships and Lifeforce
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Jan 25 03:54:28 2015@n
+   Lifeforce: Your lifeforce now grows with your other stats when you
+transform. 
+ 
+   Ships: Now require fuel. Fuel canisters can be purchased at any ticket
+seller (for now) and you can refuel your ship by using the refuel command in
+its cockpit. Fuel canisters fill up 100 units. They cost 500 zenni. You use
+1 unit of fuel for every 5 rooms the ship travels through. To see how much fuel
+your ship has look at the controls.
+ 
+   Those who already own a ship. You may get 2 free canisters from an imm. 
+Imms who do so must record what character got what. This only applies to those
+who purchased a ship prior to the change. Everyone else must go buy their own
+fuel (even for a brand new ship).
+
+#6 Guns and Ki attacks
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Jan 31 19:11:16 2015@n
+   I'm going to take a look at other weapons, but for now I've just tweaked
+Guns and Ki attacks. 
+ 
+   Help guns has the way guns work now. Ki attacks now halve the effectivness
+of Armor Index (for reducing their damage) and no longer consider constitution
+at all (which they erroneously were doing). So now only wisdom and AI reduce
+ki damage.
+
+#7 Fighting Preferences
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Feb 15 22:15:38 2015@n
+Help preference and help energize added
+ 
+ 
+Also changed absorb androids rate of restoring PL with absorb and their standing PL regen got buffed as well.
+
+#8 Shop Economy
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Feb 20 17:10:49 2015@n
+   This is how shop pricing is affected (outside of other factors) now. The
+value to BUY an object from a store lowers by 0.00025 for every existing
+version of that item in the MUD (not offline though) down to a minimum of 50%
+the original value. The value to SELL an object to a store lowers by 0.00025
+too but caps down at 15% instead of 50% (to balance buying and selling back).
+
+This is experimental and may be subject to change. Report any abuse.
+
+#9 Build
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Feb 21 17:21:48 2015@n
+   Build now has two new fail conditions. These will not destroy the parts,
+but will waste your time. This is to balance the rate of production of these
+items more than they currently are.
+ 
+   Condition 1: 2d60 - (intelligence / 5) vs 95. If it's 95 or over then you
+get the "forgot a few steps" failure.
+ 
+   Condition 2: Random 8% chance to put it together wrong and have to start
+over.
+ 
+   More changes like this may come to some other objects that are made. As
+necessary this may also be adjusted.
+
+#10 Wishes and Fireshield
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Feb 22 15:05:13 2015@n
+   Wishes have been altered somewhat (more to come). Power now gives 15%
+instead of 20% to stats it raises, zenni now gives 1,000,000 zenni instead of
+250,000 zenni, all the stat buffs are +10 instead of +5 (above any limits you
+may have such as frail), the toughness wish is 5,000 armor (didn't change it,
+some thought it was 2,500 when it actually wasn't), and lastly the knowledge
+one gives between 2,000 PS and 5,000 PS. 
+ 
+I've also fixed fireshield screwing up combos.
+
+#11 Sparring and stuff
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Feb 22 20:32:03 2015@n
+   Sparring no longer has within 20 levels as its limit for gaining. Instead
+it has decresed gains up until the level difference between the two sparrers is
+greater than 50. Aggro mobs now have a small wait before they attack.
+
+#12 More new things
+@cUpdated By@D: @CIovan         @cDate@D: @YMon Feb 23 06:02:06 2015@n
+   The chance of failure for first aid created items has been increased. So
+has the chance of failure for cooking certain dishes (the easier to obtain
+ingredients having a slightly higher chance to fail). Both of these are for
+balance reasons.
+ 
+   Also there is a new item to be created with the aid command and the medical
+construction kit. This item is Formula 82 which will restore between 8-16% of
+PL/Ki/ST (rolled separately for each) and will cure blindness. This item has a
+decently high chance of failure when constructing. You use it just like other
+medical items.
+
+#13 Badnages and cooking
+@cUpdated By@D: @CIovan         @cDate@D: @YMon Feb 23 16:29:10 2015@n
+   The values given for eating various dishes have been adjusted based on the
+difficulty or costliness of obtaining their ingredients. This is by no means
+final and will at the very least need to be evaluated when I tweak how and what
+kind of meats are obtained from animal mobs later on down the road. 
+ 
+   Using the skill first aid to bandage someone now heals for a minimum of 25%
+of their weighted powerlevel max plus 0. 25% for every point of wisdom the
+first aid practictioner has (so up to a max of 50% of the target's pl). Also
+when bandages fall off there is a high chance that any broken limbs will
+recover at that moment.
+
+#14 Fixes and Additions
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Feb 24 19:14:22 2015@n
+   1: Suppress shouldn't show you as injured anymore unless you actually are
+injured enough to have depleted suppress. 
+
+   2: Grappling and absorb should now be more active during fights and absorb
+is nolonger dropped when in a fight. Absorb now can be used when already in a
+fight as well. On top of all this the way escaping has been calculated
+differently. Now it's based on the strength stat of the escapee + a bonus vs
+the skill of the grappler/absorber + a bonus.
+ 
+   3: Sparring exp gains have been changed. See help sparring for details.
+ 
+   4: Lowered the cost of the RPP restring option from 10 RPP (pretty damn
+high) to 2 RPP. Be aware that abuse of this (which the 10 RPP was meant to
+dissuade) will result in punishment. This is a great power. With great power
+comes great responsibility.
+
+#15 Handling and sparring
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Feb 27 03:29:44 2015@n
+Help sparring for how it now works.
+ 
+Help handling for the new handling skill (weapon user related)
+
+#16 Arlians
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Mar  1 17:46:40 2015@n
+Arlian regens should be fixed (male and female)
+Ensnare now affects mobs.
+Moondust ability has been buffed somewhat. See help moondust
+Shell help file added.
+Evolution points needed for next evo level have been adjusted.
+
+#17 Balance and REWARD
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Mar  5 23:27:53 2015@n
+   Level 81+ mobs now give a good deal more experience (and the caps for exp
+have been raised) to compensate for this the difficulty of these mobs has been
+increased somewhat. For one thing their stats will be a bit higher and for
+another they will charge their ki attacks roughly twice as fast as other mobs.
+Their damage has been somewhat buffed as well. Do keep me up to date on how
+they work. 
+
+   The RPP store has received a new option. Spending RPP to lower the wait for
+Dragon Balls spawning by 1 real day. The cost is 5 RPP to do this. It will
+not work under two conditions. 1: That the Dragon Balls already exist or 2:
+The Shadow Dragons exist. It also notifies the whole MUD that this purchase
+was made (when it is made). Subject to further scrutiny so report any abuse.
+ 
+   Lastly I plan on implementing a post level 100 RPP cost. The amount isn't
+set in stone, but I will want it to be enough to slow growth somewhat without
+making things a grind (in fact the exp boost should reduce the grind quite a
+bit). Do not abuse any of the current changes prior to me putting that system
+in or else you'll lose that character. By abuse I mean if you're gaining
+billions an hour that's ridiculous by any standard.
+
+#18 Shadow Dragons
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Mar  6 08:25:45 2015@n
+   The Shadow Dragons are now loaded with a power that is adjusted based on the
+average strength of the players online when the dragons are loaded. They have
+a minimum level of 40 as well.
+
+#19 Rebalancing For Newbies
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Mar  7 23:41:03 2015@n
+Mobs level 40 and below now have lower pl/ki/st than before. Accuracy for misses
+has been tweaked somewhat (as well as for differences in speed index). And you
+can gain bonus exp of 5% of the mobs total exp when landing hits. With a higher
+chance for ki attacks to get the exp.
+
+#20 New equipment effects
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Mar  8 04:52:05 2015@n
+   Equipment (mostly jewler) now have three new bonuses they give when worn. 
+These are Regen Rate, Auto-skill training rate, and Life Force Max. More items
+will be edited to have these affects as appropriate. There's been a new item
+added (Hercule's Cape) as well. Try to find it.
+

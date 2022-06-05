@@ -20,14 +20,14 @@ class CommandEntry:
         self.text = text
         self.connection = None
         self.session = None
-        self.mobile = None
+        self.character = None
 
     def __str__(self):
         return self.text
 
     def organize(self):
         output = list()
-        for c in ("connection", "session", "mobile"):
+        for c in ("connection", "session", "character"):
             if (found := getattr(self, c)):
                 output.append(found)
         return output
@@ -47,10 +47,14 @@ class CommandEntry:
             return self.connection.get_slevel(ignore_spoof=ignore_spoof)
         return 0
 
+
 class Command:
     name = None  # Name must be set to a string!
     aliases = []
     help_category = None
+
+    def __repr__(self):
+        return f"<{self.__class__.name}: {self.name}>"
 
     @classmethod
     async def access(cls, entry: CommandEntry):
@@ -84,7 +88,7 @@ class Command:
         """
         self.entry = entry
         self.match_obj = match_obj
-        self.user: Union["Connection", "Session", "Mobile"] = user
+        self.user: Union["Connection", "Session", "CharacterInstanceDriver"] = user
 
     async def execute(self):
         pass
@@ -104,17 +108,16 @@ class PyCommand(Command):
 
     @classmethod
     async def access(cls, entry):
-        return entry.get_slevel(ignore_spoof) >= 10
+        return entry.get_slevel() >= 10
 
     def flush(self):
         pass
 
     def write(self, text):
-        out = fmt.FormatList(self.executor)
-        out.add(fmt.PyDebug(text.rsplit("\n", 1)[0]))
-        self.executor.send(out)
+        self.write_bucket.append(text)
 
     async def execute(self):
+        self.write_bucket = list()
         mdict = self.match_obj.groupdict()
         args = mdict.get("args", None)
         if not args:
@@ -145,6 +148,8 @@ class PyCommand(Command):
                 duration = " (runtime ~ %.4f ms)" % ((t1 - t0) * 1000)
             else:
                 ret = eval(pycode_compiled, {}, self.available_vars())
+            if self.write_bucket:
+                await self.user.msg(line=self.write_bucket, system_msg=True)
         except Exception:
             exc_type, exc_value, tb = sys.exc_info()
             trace = Traceback.extract(exc_type, exc_value, tb, show_locals=False)
@@ -172,6 +177,9 @@ class HasCommandHandler:
 class BaseCommandHandler:
     category = ""
 
+    def __repr__(self):
+        return f"<{self.__class__.__name__} for {self.owner}>"
+
     def __init__(self, owner: HasCommandHandler, **kwargs):
         self.owner = owner
         self.pending_command_queue = list()
@@ -188,10 +196,13 @@ class BaseCommandHandler:
             if (match := await c.match(cmd)):
                 return c, match
 
-    async def parse(self, cmd: CommandEntry):
+    async def get_match(self, cmd: CommandEntry):
         if not (c := await self.special_match(cmd)):
             c = await self.normal_match(cmd)
-        if c:
+        return c
+
+    async def parse(self, cmd: CommandEntry):
+        if (c := await self.get_match(cmd)):
             await self.found_match(cmd, c[0], c[1])
         else:
             await self.no_match(cmd)
@@ -217,9 +228,10 @@ class BaseCommandHandler:
         pass
 
     async def get_commands(self, cmd: CommandEntry) -> List["Command_Class"]:
-        return [c for c in snekmud.COMMANDS.get(self.category, list()) if await c.access(cmd)]
+        found_commands = snekmud.COMMANDS.get(self.category, list())
+        return [c for c in found_commands if await c.access(cmd)]
 
-    async def update(self):
+    async def update(self, current_tick: int):
         """
         This is called every tick.
         Presumably used to process pending commands.
@@ -234,5 +246,5 @@ class BasePlaySessionCommandHandler(BaseCommandHandler):
     pass
 
 
-class BaseMobileCommandHandler(BaseCommandHandler):
+class BaseCharacterCommandHandler(BaseCommandHandler):
     pass

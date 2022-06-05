@@ -4,6 +4,7 @@ from rich.text import Text
 
 from snekmud.commands.base import Command, BaseCommandHandler, PyCommand, CommandEntry
 
+
 class AccountHandler(BaseCommandHandler):
     category = "connection_account"
 
@@ -56,5 +57,6 @@ class FLevel(Command):
             raise ValueError(f"Cannot set @flevel lower than 0 or higher than your true level of {true_level}.")
         self.entry.connection.fake_slevel = val
         await self.entry.connection.msg(line=Text(f"@flevel set to: {val}/{true_level}"))
+
 
 ACCOUNT_COMMANDS = [OOCPyCommand, FLevel]

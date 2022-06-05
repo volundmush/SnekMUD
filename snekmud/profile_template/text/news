@@ -1,0 +1,627 @@
+#1 Welcome to the new era!
+@cUpdated By@D: @CAndros        @cDate@D: @YWed Apr 15 20:00:36 2015@n
+Welcome to the new era after a month of down time! We're sorry that the new era doesn't have the code features that you were told were going in, this is beyond our current powers to manage.
+ 
+We wish you the best of luck in this new era, and hope that you put up with any growing pains that rise from the new situation, and forgive Andros for any newb mistakes that happen.
+ 
+If you have any questions or issues about the current situation, don't be afraid to ask here or over on the forums.
+
+#2 RPP Bank added
+@cUpdated By@D: @CAndros        @cDate@D: @YMon Apr 20 02:46:32 2015@n
+I have added in an in-game version of the RPP Bank. You can add RPP from your leveling pool into your RPP Bank by using 'rpbank <amount>'. You cannot withdraw from the bank so becareful.
+ 
+In addition to this, some features in the RPP Store have been switched over to use RPP from your bank.
+ 
+ 
+In terms of bug fixing, Insomniac will not properly block Yoik and Paralyze, and Runic's messages now display properly
+
+#3 Rejoice!
+@cUpdated By@D: @CAndros        @cDate@D: @YWed Jun  3 17:23:34 2015@n
+Ships and houses are now available once again. A fuel seller has also been added to the Green Nebula Space Mall.
+
+#4 A few small changes and fixes
+@cUpdated By@D: @CAndros        @cDate@D: @YSun Jun 21 13:27:22 2015@n
+(change) Hydromancy Spike creation now has a 10 second cooldown between spike creation
+(change) Hydromancy Flood has a 15 second cooldown between uses
+(bug) You can no longer use hide while in a htank
+(bug) You can no longer add more fuel than it can hold to a ship causing you to waste fuel canisters
+(bug) You can no longer forge housing capsules
+(bug) Fixed alignment change not costing RPP
+(bug) Corrected TCX-M.E.C.K. success text shown to others in the room
+ 
+And various typo fixes
+ 
+(unchanged) IT being unobtainable by people with masochist. Its a negative trait, it should be something you should really consider.
+
+#5 Largest issue with DBAT has been fixed
+@cUpdated By@D: @CAndros        @cDate@D: @YMon Jun 22 07:49:17 2015@n
+You can now buy Ice Cream in the mall on Earth. Good day.
+
+#6 New command added
+@cUpdated By@D: @CAndros        @cDate@D: @YMon Jun 22 15:12:20 2015@n
+I have added in a highly requested feature, aura light. Using this command you will use your aura to light up the room. 
+ 
+There are some downsides to using this. You can not powerup, and you can not charge your ki. You will also lose 15% ki each regen tick.
+ 
+You also need at least 75 focus and concentration to use it.
+
+#7 New wish added to Shenron
+@cUpdated By@D: @CAndros        @cDate@D: @YTue Jun 30 18:26:22 2015@n
+It's nothing fancy, just 'wish roleplay myself' (because wishes are weird like that) for an RP-based wish. This offeres NO rewards, and is to be used purely for an RP wish.
+
+#8 Changes to throw
+@cUpdated By@D: @CAndros        @cDate@D: @YTue Jun 30 20:02:56 2015@n
+A non-throwing item will no longer multi-throw, and has a 55% drop in starting damage. You can now also zanzoken thrown objects.
+
+#9 Slam, Heeldrop, and AL chances.
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Jul 18 19:04:06 2015@n
+Slam and heeldrop have had their damaged boosted (and heeldrop has more of an edge in damage now). Stamina use raised slightly.
+
+King Kai's planet now gives a 15% bonus to TRAINing stats.
+
+#10 Huge Attacks
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Jul 24 02:21:37 2015@n
+   Genki Dama now can not be thrown back by a victim unless that victim is at
+least 5 times in current PL as the amount of ki put into the attack. Additionally
+Genki Dama now gets a bonus (calculated after the throw calculation) of 25% toward
+the charge it had. This is considered as from the environment that gave up some
+life energy toward the attack.
+ 
+   Genocide now can not be thrown back by a victim unless that victim is at least
+10 times in current PL as the amount of ki put into the attack. Nothing else about
+it was changed.
+ 
+   Both huge attacks will now aggro ANY NPCs that can fight that are in the
+same room. They will aggro against the one who threw it in a desperate bid to
+kill them. This is to fight people stacking rooms with 50 MOBs and nuking
+them. Well not so much stop as discourage some.
+
+#11 Moar updates
+@cUpdated By@D: @CAndros        @cDate@D: @YSun Jul 26 16:31:59 2015@n
+EXP gained from mobs is now dependant on how many mobs are in a room at the time of death.
+
+1-10 gives the normal ammount of EXP
+10-15 reduces EXP by 25%
+15-20 reduces EXP by 40%
+20-30 reduces EXP by 60%
+30+   reduces EXP by 80%
+Tsuihidan SHOULD POSSIBLY be fixed as well.
+
+#12 Dying 'n Stuff
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Oct 27 04:48:36 2015@n
+   Revival: The three main forms of revival all have a new distinction between
+them, and death has a penalty that can last now. If you revive via a revival
+quest you will have a 40% chance of suffering a loss to your character's
+attributes (str, con, etc. ) of 1 to 3 points worth os loss (to a minimum of
+4), you will additionally have a roughly 20% chance of losing between 1-300 PS.
+If you revive with RPP you will have roughly a 32% chance to suffer similar
+stat loss, and still 20% for the PS loss. If you revive via dragonball wishes
+you no chance to lose any stats or PS.
+ 
+   Immortal: Immortals now have a 15% experience pentalty on all experience
+they acquire. This is a balancing feature as well as working logically since
+without the fear of death your character gains less meaning out of activities
+that award experience.
+
+#13 Traits, Grouping, and More!
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Oct 27 21:08:18 2015@n
+The following traits have had additional effects added to them. They still
+retain their previous effects.
+ 
+@YHard worker@w: +25% Training Points, Pushup and situp gains + 50%
+@YBrawny@w, @YAgile@w, @YQuick@w, @YScholarly@w, @YSage@w, and @YSturdy@w: +75% to train
+@YLoyal@w: +20% exp when following in a group
+@YLoner@w: +5% Train gains, +10% Pushup, Situp, and meditate gains. Points for 
+loner dropped from 2 to 1 (this will not retroactively affect any existing
+characters.)
+@YWimp@w, @YDull@w, @YFoolish@w, @YClumsy@w, @YSlow@w, and @YFrail@w all have been raised from a cap of 
+25 to 45.
+ 
+Grouped characters that are followers now get a +15% exp bonus to exp earned
+through the defeat of an enemy. If a group member dies the other members will
+get a 25% refill to their current LF for a follower and 40% if the leader dies.
+Leaders of groups will get a reward of +1 PS for every enemy the group kills.
+Additionally leaders will convey a bonus to all members of the group
+(other than the leader) based on the leader's sensei. The bonuses are listed 
+below.
+ 
+@YRoshi@w: +2 PS per kill
+@YKrane@w: +5% exp per kill
+@YBardock@w: +10% Physical Damage
+@YNail@w: 4% ki recovered per kill
+@YKibito@w: 2% pl/ki/st recovered per kill
+@YSixteen@w(only android followers benefit): +5% PL recovered if a Repair Android,
++5 Upgrade Points or +15% absorb gains if Powersense, +2% Ki and Stamina recovered if Absorb.
+@YTapion@w: +5% dodge and +2% weapon damage
+@YFrieza@w: +10% Ki damage
+@YTsuna@w: Group members that can't breath underwater lose ki at 1/4th normal rate
+@YPiccolo@w: 4% Stamina recovered per kill
+@YKurzak@w: +10% defense against physical
+@YJinto@w: +5% Exp per kill if Birth Phase, +10% if Life Phase
+@YDabura@w: Immunity to lava rooms
+ 
+When recovering from a broken limb from it healing over time, if you do not have a
+bandage on you will suffer a 1 point loss to Strength, Agility, Speed, and Constitution.
+Heal, regenerate, senzu beans, and bandages will prevent any such stat loss. When recovering
+from mind break you will have a 50% chance to lose 1 point in both Intelligence, unless you
+happen to be a telepath, in which case you have a 5% chance of suffering the same.
+ 
+
+#14 Sensei Training and Build
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Nov  1 03:09:02 2015@n
+   You can now use train at a sensei and get a significant boost to your
+training rate. This costs 8 zenni and 1 ps per train at a sensei. If you do
+not have enough then nothing is deducted
+ 
+   Non-truffles now have two chances to produce products via build that have
+slightly less value than normal. Both truffles and non have a chance to create
+an item of more value.
+
+#15 New Changes
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Nov  3 18:10:24 2015@n
+   You can now use extract to combine the ink of two Seraf bottles into one. 
+Any left over ink is wasted as residue on the discarded bottle though. It is
+probably best that you carefully nickname the bottles you want to mix before
+mixing them to avoid accidentally targeting bottles that you do not want to
+combine.
+ 
+Training with the help of a sensei now requires a bit less stamina or ki than before.
+ 
+New weighted kachin gear has been added to a certain shop. Includes back, waist, hands
+and neck pieces.
+#16 Limbs
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Nov 13 00:30:31 2015@n
+   Limbs now have a visible condition. Now a limb below 50% of condition is
+broken, and though it can still be used will damage the limb further if done
+so. Limbs can still be outright destroyed (or severed) and limbs that are
+damaged to 0% condition are also destroyed (this includes through forcing their
+use when broken. ) Now limbs above 0% recover when sitting (1% per tick),
+resting (3%), and sleeping (5%). On top of this bandages (which function
+differently now) add a 10% recover every tick they are on (regardless of
+whether you are standing, sitting, or whatever. )
+ 
+Limb condition is viewable from the status screen (or by looking at someone)
+ 
+Armor Index helps protect limbs from condition loss.
+Armor Index Limb Protection Table
+-----------------------
+AI (50,000) reduce limb damage by 5 (to minimum of 0)
+AI (40,000) recuce limb damage by 4 (to minimum of 0)
+AI (30,000) reduce limb damage by 3 (to minimum of 0)
+AI (20,000) reduce limb damage by 2 (to minimum of 0)
+AI (10,000) reduce limb damage by 1 (to minimum of 0)
+AI (5,000) 50% chance to reduce limb damage by 1 (to minimum of 0)
+ 
+Limb Damage Table (not counting skills that severe or outright destroy limbs)
+-----------------------
+Success: Based on the chance that skill has to break or damage limbs.
+25-40 dmg for an attack dealing at least 50% of the target's PL.
+15-24 dmg for an attack dealing at least 25% of a target's PL.
+8-14 dmg for an attack dealing at least 10% of a target's PL.
+4-7 dmg for an attack dealing at least 5% of a target's PL.
+1-3 for any other attack that at least does 50 dmg (flat 50.)
+#17 Tapion Skill Added In
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Nov 27 01:45:32 2015@n
+   Tapion now has the skill (one skill slot) mystic music, which allows you to
+use the song command as long as you have an ocarina (minosha sells the basic
+version, and an NPC already drops a better version that reduces the ki cost for
+songs by 50%)
+ 
+   The way songs work is that the character starts playing a song, nothing
+happens immediately (unless you get very lucky), but instead every 15 seconds
+the songs effect takes place. It only ends if the musician runs out of ki or
+in the case of teleport has successfully teleported.
+@n
+   Songs will never fail when first used (when you begin playing), but instead
+skill is checked vs a pair of axion dice (with a small modifier for the best
+songs) each song cycle to see if the song was played correctly. If it was then
+everyone grouped with the musician (or not grouped, in the case of Shadow
+Stitch) gets the effect (with a small cost of ki per affected group member,
+except for teleport). If the musician fails then there is just a failure
+message, no cost, and they continue playing. 
+@n
+@RYou can not attack while playing a song.@n
+ 
+Songs
+----------
+   Song of Safety: Heals PL based on a percentage of the musician's max ki,
+their skill with mystic music, and a base amount. Stamina is restored for half
+of the amount of PL that gets restored. To top all this off the limb condition
+of all limbs is restored by as much as 11% each song cycle.
+ 
+   Shadow Stitch Minuet: If this succeeds it lags non-grouped player characters
+by 2 seconds or permanantly subtracts 2 speed from NPCs.
+ 
+   Teleportation Melody: If this succeeds the entire group is teleported
+instantly to the planet of the musician's choosing.
+ 
+   Song of Shielding: If this succeeds on a song cycle the affected group
+members get a barrier worth 15% of the musician's max ki. If they have their
+own barrier the 15% is added to it instead. If their barrier is at or equal to
+75% of THEIR max ki then it stays capped at 75% instead.
+
+
+#18 Minor update
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Dec  5 23:10:00 2015@n
+   Multiform will be going in by Tuesday night, after that the rest of the
+planned coding updates (that have been announced) should be finished rather
+quickly.
+ 
+   Groups now have a group victory counter (viewable within status). Every 20
+group victories over an NPC or PC (it is counted individually, so someone
+joining a group after it has already built up a victory count will have to
+build up their own count through participating in the group), anyway after
+every 20 victories will add a 2% bonus to the experience earned from the
+victory. Up to a max of 16%. This stacks with all other bonuses you may have.
+Leaving a group or being kicked out will obviously reset the count to 0.
+
+#19 New Era
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Jan 12 19:34:58 2016@n
+   Multiform and a few new changes are not ready yet, but I didn't think it was
+right to make you all wait any longer. Look forward to them being put in over
+the next couple of weeks, any possible disadvantage this may have put you at
+will be tweaked. In addition a new change for arlians will be going in soon
+along with them, allowing arlians to spend their evo points on some tiny
+upgrades in addition to letting those points upgrade their level. This will
+give arlians a way to grow somewhat while still saving their evo levels for
+later. More details on this will follow.
+
+ 
+   The RP grading process and rewards are going to be reviewed this week as
+well and some new rewards involving clan wars will be added in as well. 
+Something to the tune of a set period of time that a war takes place in (like
+maybe one RL month) and the winning clan will get 20 RPP for each member (plus
+whatever logs earned) and the losing clan will get enough RPP to revive any of
+its dead members + 2 RPP for each member (and whatever RPP logs earned). 
+Revivals for clans at war will be suspended except for wish revivals. The clan
+with the most surviving members by the end of the war (which must be agreed
+upon by both clans) wins. Clans that just hide and never bother to war will be
+disqualified from the war with a penalty I haven't thought up yet.
+
+#20 A new command has been added
+@cUpdated By@D: @CAndros        @cDate@D: @YWed Jan 13 13:15:59 2016@n
+What is this command, you might be asking yourself? It is a command to help with RP, I have called it 'roomdisplay'. This command will let you set something that will be visible to those in the room so you don't have to always set up a pose to reflect what you're doing, a player will be able to just look and see what you're doing.
+
+
+
+It is used like so: roomdisplay he is sitting in the sand on the beach with a fishing rod in hand as he awaits the fish
+
+This will show
+Andros is sitting here
+...he is sitting in the sand on the beach with a fishing rod in hand as he awaits the fish
+
+
+You can check your current roomdisplay in 'status', typing 'roomdisplay' on its own will clear it, and it also clears when you move to a new room.
+
+#21 Multiform
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Jan 16 22:19:37 2016@n
+   Multiform is in and available to Piccolo and Krane students to learn. It
+can not be trained through use, but instead must be practiced. I will have the
+order command done soon so that you may order them around. In the meantime
+your clones are sorta in a mild beta stage. They do not blend in (as I haven't
+coded all that needs to go with that) and are identified as clones (and
+targetable as such). If you are in a fight your multiform will tend to jump in
+to help you, using the skills available to your sensei as if a normal NPC. If
+the multiform kills the target the owner of the multiform gets the experience
+as if they killed it (bonuses and all).
+ 
+   Forming each multiform will reduce your pl/ki/st based on 25% of your base
+stats, up to a maximum of 3 clones worth. This means that one clone will have
+both you and the clone sitting at 75% of your base stats, two clones will have
+all three of you at 50%, and four clones will have all four of you at 25%. 
+Permanant trans races will have their trans multipliers applied to the
+calculations. Non-perm trans races can not be transformed or transform while
+using multiform due to concentration. This may change later as I develope
+multiform, but right now it is the best way to do it.
+
+#22 RP Grading, Zenni, RPP Costs
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Jan 17 20:20:02 2016@n
+   RP Grading: Length rules for RPP from now on will be per CHARACTER with that
+character getting rewarded based on how many sets of 10 quality posts (3-4
+lines that meet quality standards) there are. Short posts or poses will be
+combined till one quality is counted. Loggers are responsible for counting the
+number of posts a character makes in the log and indicating it at the top. 
+Every 10 posts nets + 1 rpp for that individual. Solo logs are limited to ONE
+of these max due to being easier to manage (no coordinating multiple players,
+waiting, etc. )
+ 
+You can now carry a significantly larger amount of money on your character.
+ 
+   Demons and Kanassans are no longer free from RPP costs till 40 races. 
+Additionally the remaining free to 40 races are now only free to 30 instead.
+
+#23 Bugs and Turtles
+@cUpdated By@D: @CIovan         @cDate@D: @YWed Jan 20 02:29:49 2016@n
+   Arlians now can use the evolve command to spend their evolution experience
+on small PK, Ki, and Stamina upgrades. They are equal to 1-1. 5% of base
+pl/ki/st. Costs of these scale with your growth. You do not need to use this
+at all either, just don't spend your points and you will get evolution levels
+as usual.
+ 
+   Roshi now teaches the skill Spirit Control. This self buff lasts for
+between 2 and 5 mud hours, and while it is in effect the user can instantly
+charge ki to the desired percent. However the user will be charged from their
+current ki 5% of max ki everytime they charge to a percent (1% if you have
+Spirit Control's skill level at 100). Using spirit control costs 20% of your
+max ki taken from stamina. This is only taken when you first put the buff on
+and will not be charged again as long as it lasts afterward. Further there is
+a 15% chance to fail to charge while the buff is in effect, this will not cost
+you anything but will remove the buff. This failure rate is reduced by 1%
+(down to a minimum of 5% failure) for every 10 skill levels you have in Spirit
+Control. Spirit Control acts as a tier 1 in regards to skill prerequisites.
+
+#24 Mutants and Bios
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Jan 30 22:10:06 2016@n
+Mutants now have two new traits available during Character Creation. Innate Telepathy (start with it at SLVL 50) and Natural energy (get 5% of your ki attack damage back into your ki.)
+ 
+Bios get Kai and Konatsu DNA. Telepathy at level 30 and Focus at 30 for Kai, and Multihit chance +40% for Konatsu.
+
+#25 Piccolo and Demons
+@cUpdated By@D: @CIovan         @cDate@D: @YSun Feb  7 02:41:20 2016@n
+   Piccolo now teaches Vigor. Demons now burn anyone they KILL with a ki
+attack, this is for the purposes of gathering ash not giving the burned status
+ailment.
+
+#26 Penalty of death
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Feb 11 23:31:44 2016@n
+   You will no longer lose some of your stats permanently when you die. 
+Instead now you will have weakened state that debuffs all your stats by 8
+points for a period of 100 mud hours. This effect must wear off on its own. 
+It can not be healed by anyone or anything.
+
+#27 House training
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Feb 18 21:55:37 2016@n
+   From now on all characters are subject to an unseeen "at ease" penalty for
+being in houses for too long. What this does is lower the chances of getting a
+spar gain, increase the costs of pushup/situp/meditate (not expand), and
+increase the cost of training stats. The rate all of these are affected is
+based on how many regen ticks you have been in a house, with four different
+ranges.
+ 
+@RRangers@n
+@D-------------------------@n
+   @C0-23 Ticks@D: @WNo penalties. 
+   @C24-47 Ticks@D: @W20% lower chance to get a spar gain, x4 cost for
+pushup/situp/med, x2 cost for training stats. 
+   @C48-95 Ticks@D: @W50% lower chance to get a spar gain, x15 cost for
+pushup/situp/med, x5 cost for training stats. 
+   @C96+ Ticks@D: @W0% chance to get a spar gain, x50 cost for pushup/situp/med, x10
+cost for training stats. @n
+ 
+   In order to alleviate this you must be outside of a house long enough for
+your character's at ease sense to stop hampering their ability to train there.
+More or less by going out and adventuring instead of being a hermit all the
+time.
+
+#28 House training update
+@cUpdated By@D: @CIovan         @cDate@D: @YSat Feb 20 20:16:54 2016@n
+   The times of when the stages of "at ease" hit have been changed. It is now
+116 ticks for the first stage instead of 24, 232 for the second stage, and 464
+for the third. You also get a message in status whenever you hit these stages
+so you know why your training has been hampered.
+ 
+   On top of this if you are in stage 2 and you go outside for a tick your "at
+ease" count will drop at double the rate it rises at (so 2 ticks for 1). 
+Third stage is double again (4 for 1). This is to make the wait to be able to
+return not be nearly as intense. Note though that once you drop from one stage
+to another the rate of decline will change to that stage's. So from stage 3 to
+2 will have it go from 4 ticks for 1 to 2 for 1.
+
+#29 Arlia has grown!
+@cUpdated By@D: @CIovan         @cDate@D: @YMon Feb 22 01:26:24 2016@n
+New large zone added to Arlia with a lot to experience now, and more to come (in form of added quests). This collection of zones will satisfy characters level 65-100+
+
+#30 NPC Deaths and Stealing
+@cUpdated By@D: @CIovan         @cDate@D: @YThu Feb 25 18:09:26 2016@n
+   NPC deaths now only make you wait 8 hours, no matter how many deaths you
+have had. Now the number of deaths changes the length of the weakened state
+debuff from non-wish revival. 2 or less deaths = 40 mud hours of weakened
+state, 3-4 = 60, 5-7 = 75, 8-9 = 90, and 10 or greater = 100 (what it was set
+to all the time). This both relieves the pressure of dying to some random NPC
+as well as incentivizing you to avoid repeated deaths if you don't want to deal
+with the debuff.
+ 
+Player vs player theft is now logged for imm review as well as informing the
+victim when they check their inventory that they have been recently robbed. This
+warning will only appear the first time you check inventory after being stolen
+from, but will be extremely hard to miss at the top of the inventory list.
+#31 WEBSITE IS BACK
+@cUpdated By@D: @CIovan         @cDate@D: @YMon Mar  7 22:57:16 2016@n
+ALL HAIL RUKH THE DONATOR
+
+#32 NPC damage and transformations
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Mar 15 21:40:20 2016@n
+   NPC damage has been altered. Some NPCs will do more than before (based on
+current and max pl and strength of the npc) and many higher level ones now do
+considerably less (griknaug for example. )
+ 
+   Non perm transes have had their stamina drain while active lowered across
+the board and now the higher your transformation the less stamina used with
+physical attacks thrown.
+ 
+MOre transformation additions planned for the near future.
+
+#33 Forum Issues
+@cUpdated By@D: @CRillao        @cDate@D: @YTue Apr  5 20:24:37 2016@n
+Hey guys,
+
+   Just wanted to let everyone know that the crazy people in the sky are
+working on pushing some ideas around about the forums. Please don't let this
+deter you from roleplaying. I will award all logs posted an extra RPP when the
+forums come back up. Just a minor hiccup. We're working towards getting it to
+not happen again. 
+ 
+Sorry, all!
+
+#34 Forums back up!
+@cUpdated By@D: @CRillao        @cDate@D: @YSun Apr 24 23:34:04 2016@n
+Forums back up!
+We apologise for the excessive delay folks.
+
+#35 Random Roll Challenge
+@cUpdated By@D: @CVirtus        @cDate@D: @YSun Jul 24 10:36:53 2016@n
+   We're holding another Random Roll Challenge, seeing as how fun it was, and
+how much it was requested this year. 
+
+View this thread for details: http://advent-truth.com/forum/topic/6953-random-roll-challenge/
+   
+
+#36 Upcoming changes
+@cUpdated By@D: @CRillao        @cDate@D: @YFri Aug  5 21:20:43 2016@n
+Hey all!
+
+   Over the next week or two certain things will be changing
+throughout the world. Most of these changes will be considered Quality of Life
+updates to the cityscapes on our major planets. I won't spoil what and where,
+but feedback is always welcomed should you come across it. Hopefully it will
+be largely agreeable to everyone on a whole, I don't expect it to satsify
+everyone. =]
+
+-Rillao
+
+#37 30 RPP to reach level 100 for now
+@cUpdated By@D: @CVirtus        @cDate@D: @YMon Oct  3 19:51:17 2016@n
+   After quite a while of thought and discussion with the other immortals, I've
+decided to approve this thread idea: (http://advent-truth. 
+Com/forum/topic/6977-radical-experiment-2/). It ties well into something that
+I'm planning, (info soon to come! ), and it's only fair that everyone gets to
+experience both ends of the stick- quick level 100 as well as looooong pre-100.
+
+ 
+   To get the early level 100, you first must have 30 RPP. You also must get
+into contact with one of the immortals (really, I'm the only one that can
+advance you the easiest). There may also be a roleplay involved, to make it
+make sense in character for the sudden jump in powerlevel. You'll be given a
+free softcap at level 91 and then boom, you're a fresh level 100 ready to
+endlessly grind to compete with the rest of the players!
+
+#38 Hoooold on to your butts!
+@cUpdated By@D: @CRillao        @cDate@D: @YWed Nov 30 11:36:53 2016@n
+   Hey guys! Our supreme overlord and master (Iovan) has been hard at work
+fixing stuff. Abra cadabra There -appears- to be a slight bug with players at
+level 100 gaining absurd amounts of stats, which I'm sure you can guess... 
+That's right! It's kind of a problem, a weird one in an awkward, unfair way.
+We're not trying to restrict you completely from killing mobs, but we would
+like you to exercise CAUTION in grinding. We will be watching and keeping
+track, and we would like to apologise for this mess, it should hopefully be
+resolved soon!
+
+-Rillao 
+
+#39 It's December.. which means Northran time!
+@cUpdated By@D: @CVirtus        @cDate@D: @YMon Dec  5 12:35:57 2016@n
+   It's december, which means your favorite annoying escaped elf, Alan, is
+back. He's here once again to save Northran from the abominable foe, Jack
+Frost. You'll find Alan in a very common place on a very common planet- and
+that's all the hint you'll have for it. He's hard to miss, what with him
+shouting at you the moment you enter the zone. Santa Claws will also be added
+back as well, so keep an eye out. Happy hunting!
+
+#40 Lifeforce Change
+@cUpdated By@D: @CIovan         @cDate@D: @YFri Dec 16 00:13:32 2016@n
+   Now if a player is hit with a fatal non-sparring attack and has life force
+enough left to weather the remaining damage (after substracting your remaining
+PL) then you will cling to life, and recover a small amount of your PL at that
+moment. The amount recovered is either 5% of your Life Force maximum, if you
+have the LF for it after the damage has been calculated, or your level x 100
+(example: level 50 x 100 = 5,000 PL). When your Life Force runs out, then you
+die.
+ 
+   Additionally I will be making it so that food recoverd LF when eaten (for
+non-namekians, namekians will get this from drinking instead). The amount will
+be 2% per hour of fullness (i. E. If you were full 5 mud hours ago and you
+eat to full you will have recovered 10% of Life Max from that food you ate. )
+Advanced cooking recipes will fill up more when eaten.
+
+#41 Era End
+@cUpdated By@D: @CIovan         @cDate@D: @YTue Jan  3 16:36:42 2017@n
+Will be January 31st, announcement of full planned changes will be on the forum by the 7th.
+
+#42 Forum's Up!
+@cUpdated By@D: @CVirtus        @cDate@D: @YTue Jan 10 17:56:14 2017@n
+   Sorry for the delay, everyone. My laptop is super dead, so I have to play
+on someone else's PC/my phone which makes paying for the server somewhat
+difficult. However, with my further work schedule looking like general shit, I
+should be around more often and able to keep this up and running. Which leads
+me to my next point- view this thread. Thanks!
+ 
+Http://advent-truth. Com/forum/topic/7074-customrpp-race-reimbursements/
+
+#43 Dark Metamorphosis and you
+@cUpdated By@D: @CVirtus        @cDate@D: @YMon Feb 27 16:11:05 2017@n
+   Dark Metamorphosis is now in game as an acquirable skill. It will not be
+available to anyone who is trained under Buu or King Kai, and the master take
+the place as a mutually exclusive third trainer. 
+ 
+   The trainer that teaches Dark Meta is a little different than normal, other
+trainers, in that he wanders about, rather than staying in one place. He has
+200 rooms he'll roam around in, so make sure you pay attention when searching.
+ 
+   Oh, and it is a neutral/evil skill only. Much like Kaioken being unusable
+while evil, you won't be able to use it if you're good.
+
+#44 A handfull of bug fixes
+@cUpdated By@D: @CAndros        @cDate@D: @YTue Mar 21 10:06:10 2017@n
+Android
+-Repair and Recharge now have cooldowns as intended
+ 
+Bioandroid
+-Vommiting will no longer magically make you able to eat if you have Namekian DNA
+-Focus and Telepathy are now properly set on Chargen
+ 
+Mutant
+-No longer displays you as very tall, and heavy if you selected the Telepathy Genome
+-No longer shows you as in Kyodaika
+-Now properly sets Telepathy on chargen if Genome is selected
+-Bite now proeprly displays messages to the user when the target dodges, parries, zanzokens, or you have a general miss.
+ 
+Telepathy
+-The user will now get a message if the person they used it on attempts to 'meditate break', and it won't get shown to the entire room now. A message will instead appear to everyone in the room when someone uses 'meditate break' to reflect them doing something.
+
+#45 Paying the bills
+@cUpdated By@D: @CVirtus        @cDate@D: @YWed Aug 16 12:56:06 2017@n
+http://advent-truth.com/forum/topic/7427-paying-the-bills/
+
+#46 The most needed item in all of DBAT!
+@cUpdated By@D: @CVirtus        @cDate@D: @YWed Jan 17 20:52:02 2018@n
+http://advent-truth.com/forum/topic/7480-the-most-needed-item-in-all-of-dbat/
+
+#47 47 List of recent changes
+@cUpdated By@D: @CVirtus        @cDate@D: @YFri Mar  9 18:32:02 2018@n
+   This is a random list of changes we've been putting in the last few weeks,
+figured they should be documented in game as well as on the forum. Without
+further adieu:
+ 
+   Saiyans have been adjusted. Their Saiyan blood gains (along with
+bioandroids) have been adjusted so that they obey softcap. That isn't the
+final result for it. We haven't forgotten. They now have a +20% damage boost
+to all tier 3 attacks. 
+ 
+On top of this, they now have a new mechanic: Zenkai boost.
+ 
+   When a Saiyan dies, they will have a 25% chance to stand back up, assuming
+they have the lifeforce to do it. It works very similar to the majin or
+bioandroid regenerate function, in that regard. The lifeforce required will be
+75%+, and if successful after a one second delay they will get a second wind,
+filling their powerlevel to 50%, ki and stamina to 25% (if necessary), as a
+last ditch effort to survive- fight or flight. On top of this, the Saiyan will
+earn a @Rpermanent@n +3% powerlevel and 1. 5% stamina and ki. This will not obey
+softcap. This will also not fire while dead. 
+ 
+   The evil death quest has been reworked to make it more bearable for people
+who return to the afterlife often. The quest NPC doesn't steal your item
+anymore if it's not time to return to the mortal coil, nor does he teleport you
+as far away as he possibly can. You can also completely skip the knowledge
+gauntlet if you've done the quest before, as well. 
+ 
+   There's a trainer that teaches dual-wield and twohand, in a location where
+most weapon users would try to find themselves late-game. Note that I said
+trainer, and not sensei. 
+ 
+   Various fixes have been done to the RPP store, if you continue to experience
+any more errors feel free to let us know. 
+
+   Sensei guards no longer tell you to screw off and lock you in the tile,
+demanding that you stop carrying someone (when you aren't).
+There's more, but the news post won't let me add anything else.
+

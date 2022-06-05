@@ -15,8 +15,11 @@ class Connection(OldConn, HasCommandHandler):
         self.cmd_handler: Optional["BaseCommandHandler"] = None
         self.created = time.time()
         self.last_user_input = time.time()
-        self.session: Optiona["Session"] = None
+        self.session: Optional["Session"] = None
         self.fake_slevel = 0
+
+    def __str__(self):
+        return self.details.client_id
 
     def get_slevel(self, ignore_spoof=False):
         if not self.user:
@@ -47,6 +50,7 @@ class Connection(OldConn, HasCommandHandler):
         """
         handler = snekmud.COMMAND_HANDLERS["connection_login"]
         await self.set_cmd_handler(handler)
+        await self.msg(line=snekmud.GAME.text_files.get("greetansi", Text("No greetansi text file!")), system_msg=True)
 
     async def check_login(self, name: Union[str, Text], password: Union[str, Text]):
         if not (found := await snekmud.GAME.accounts.find(name=name, exact=True)):

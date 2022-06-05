@@ -51,4 +51,6 @@ nosetests.xml
 # PyCharm config
 .idea
 
-adventkai/profile_template/lib
+snekmud/profile_template/accounts/*.json
+snekmud/profile_template/characters/*.json
+snekmud/profile_template/zones

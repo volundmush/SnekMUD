@@ -22,13 +22,16 @@ def _new_account():
 @dataclass(slots=True)
 class Account:
     account_id: str = ""
-    name: Text = field(default_factory=_new_account, metadata=config(encoder=lambda x: x.serialize(), decoder=Text.deserialize))
+    name: str = "New Account"
     password_hash: Optional[str] = None
+    password: Optional[str] = None
     max_characters: int = 3
     supervisor_level: int = 0
     email: Optional[str] = None
     created: datetime.datetime = field(default_factory=datetime.datetime.utcnow)
     last_login: Optional[datetime.datetime] = None
+    earned_rpp: int = 0
+    current_rpp: int = 0
 
 
 class AccountDriver:
@@ -37,7 +40,7 @@ class AccountDriver:
 
     def __init__(self, account):
         self.account = account
-        self.characters: WeakValueDictionary[str, ref["MobileInstanceDriver"]] = WeakValueDictionary()
+        self.characters: WeakValueDictionary[str, ref["CharacterInstanceDriver"]] = WeakValueDictionary()
         self.connections: WeakValueDictionary[str, ref["Connection"]] = WeakValueDictionary()
         self.dirty = False
 
@@ -46,8 +49,12 @@ class AccountDriver:
 
     async def set_password(self, password: str):
         self.account.password_hash = CRYPT.hash(password)
+        self.account.password = None
 
     async def verify_password(self, password: str):
+        if self.account.password:
+            if self.account.password == password:
+                await self.set_password(password)
         return CRYPT.verify(password, self.account.password_hash)
 
     def delete(self):
@@ -71,7 +78,7 @@ class AccountDriver:
             await v.msg(line=line, text=text, source=source, relayed_by=relayed_by, system_msg=system_msg,
                         channel=channel, gmcp=gmcp, highlighter=highlighter, **kwargs)
 
-    async def get_characters(self) -> List["MobileInstanceDriver"]:
+    async def get_characters(self) -> List["CharacterInstanceDriver"]:
         return [c for c in self.characters.values() if c]
 
     async def login_screen(self, connection: "Connection"):
@@ -102,10 +109,10 @@ class AccountDriver:
             if not v:
                 continue
             if v.session:
-                sess_table.add_row(v.mobile.name, ", ".join(v.session.connections.keys()),
+                sess_table.add_row(v.entity.name, ", ".join(v.session.connections.keys()),
                                    f"{int(v.get_conn_time())}", f"{int(v.get_idle_time())}")
             else:
-                sess_table.add_row(v.mobile.name, "N/A", "N/A", "N/A")
+                sess_table.add_row(v.entity.name, "N/A", "N/A", "N/A")
 
         all_table.add_row(conn_table)
         all_table.add_row(sess_table)

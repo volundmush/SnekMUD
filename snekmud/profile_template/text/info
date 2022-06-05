@@ -1,0 +1,171 @@
+Dragonball Advent Truth Equipment Primer
+----------------------------------------
+
+* How stats work on shop equipment. If it says 1S that means you may put a point to 
+one stat(of your choice) out of the main stats. Now you may put more than the listed
+amount if you balance it with a negative to a stat. Such as if it says 1S you may
+make it +2str if it has -1 on another stat. Nothing should be above +2 to a single
+stat unless a negative is given to another stat. Out of an entire set stats of any
+kind should not be raised more than a total of 5. That means the + to stats from all
+the pieces in the set combined can not be more than 5.
+
+
+** Costs are dynamic, An initial cost will be posted for a level range, and then that
+cost is increased or decreased based on the piece of equipment. For example if the
+set's base cost is 1000, and a piece has -200 it will cost 800 zenni. If an = is
+present the piece's cost is equal to the base cost.
+
+*** Level requirements must be set for the lowest number of a level range. For example
+Newbie range is level 2-5, so a piece of newbie eq would be set to level 2 req
+
+**** Jewelry is earrings, rings, necklaces, scouter
+
+Store Equipment       Armor Index                Cost                 Stats
+---------------      -------------             --------            ------------
+
+                                               Base(200)
+Newbie(level 2-5) - Body: +50 armor             +25
+                    About: +10 armor             =
+                    Wrist: +20 armor            -75
+                    Legs: +25 armor             -25
+                    Belt: +10 armor             -100
+                    Feet: +10 armor             -50
+                    Hands: +10 armor            -50
+                    Arms: +10 armor             -50
+                    Jewelry: +0 armor           -50                     +0
+
+                                               Base(500)
+Novice(Level 6-10) - Body: +75 armor            +50
+                    About: +20 armor             =
+                    Wrist: +30 armor            -125
+                    Legs: +35 armor             -50
+                    Belt: +20 armor             -200
+                    Feet: +20 armor             -100
+                    Hands: +20 armor            -100
+                    Arms: +20 armor             -100
+                    Jewelry: +0 armor           -100                    +1S
+
+                                               Base(2000)
+Mid-Novice(Level 11-15) - Body: +200 armor      +200
+                    About: +120 armor            =
+                    Wrist: +130 armor           -250
+                    Legs: +135 armor            -100
+                    Belt: +120 armor            -400
+                    Feet: +120 armor            -200 
+                    Hands: +120 armor           -200
+                    Arms: +120 armor            -200
+                    Jewelry: +0 armor           -200                     +1S
+
+                                               Base(4000)
+High-Novice(Level 16-20) - Body: +300 armor     +500
+                    About: +220 armor             =
+                    Wrist: +230 armor           -500
+                    Legs: +235 armor            -250
+                    Belt: +220 armor            -1000
+                    Feet: +220 armor            -300
+                    Hands: +220 armor           -300
+                    Arms: +220 armor            -300
+                    Jewelry: +0 armor           -300                     +1S
+
+                                               Base(6000)
+Midbie (Level 20-30) - Body: +500 armor         +1000                    +1S
+                    About: +300 armor             =
+                    Wrist: +330 armor           -1000
+                    Legs: +335 armor            -500
+                    Belt: +320 armor            -1500
+                    Feet: +320 armor            -400
+                    Hands: +320 armor           -400
+                    Arms: +320 armor            -400
+                    Jewelry: +0 armor           -400                     +1S
+
+                                               Base(8000)
+Mid-Midbie(Level 30-40) - Body: +1000 armor     +2000                    +1S
+                    About: +820 armor             =
+                    Wrist: +830 armor           -2000
+                    Legs: +835 armor            -1000
+                    Belt: +820 armor            -2500
+                    Feet: +820 armor            -500
+                    Hands: +820 armor           -500
+                    Arms: +820 armor            -500
+                    Jewelry: +0 armor           -500                     +1S
+
+                                               Base(10000)
+High-Midbie(Level 40-50) - Body: +2000 armor    +3000                    +1S
+                    About: +1820 armor           =
+                    Wrist: +1830 armor          -3000
+                    Legs: +1835 armor           -1500
+                    Belt: +1820 armor           -3500
+                    Feet: +1820 armor           -600
+                    Hands: +1820 armor          -600
+                    Arms: +1820 armor           -600
+                    Jewelry: +0 armor           -600                     +2S
+
+                                               Base(15000)
+Proficient(Level 50-70) - Body: +3500 armor     +5000                    +1S
+                    About: +2820 armor           =
+                    Wrist: +2830 armor          -5000
+                    Legs: +2835 armor           -2000
+                    Belt: +2820 armor           -4500
+                    Feet: +2820 armor           -1000
+                    Hands: +2820 armor          -1000
+                    Arms: +2820 armor           -1000
+                    Jewelry: +0 armor           -1000                    +2S
+
+                                               Base(20000)
+Highbie(Level 70-90) - Body: +5000 armor        +5000                    +2s
+                    About: +3820 armor           =
+                    Wrist: +3830 armor          -5000
+                    Legs: +3835 armor           -2000
+                    Belt: +3820 armor           -4500
+                    Feet: +3820 armor           -1000
+                    Hands: +3820 armor          -1000
+                    Arms: +3820 armor           -1000
+                    Jewelry: +0 armor           -1000                    +2S
+
+                                               Base(25000)
+Expert(Level 90-100) - Body: +8000 armor        +10000                   +2S
+                    About: +5820 armor           =
+                    Wrist: +5830 armor          -8000
+                    Legs: +5835 armor           -4000
+                    Belt: +5820 armor           -8000
+                    Feet: +5820 armor           -2000
+                    Hands: +5820 armor          -2000
+                    Arms: +5820 armor           -2000
+                    Jewelry: +0 armor           -2000                    +2S
+
+
+
+Quest Equipment
+-----------------
+
+Same armor for the same ranges, just with + to one or two stats SOMETIMES. Very little equipment should boost stats.
+
+Weapons
+-----------------
+
+Weapons are seperated into 6 categories, 5 main and 1 general. The 5 main
+categories are determined by the attack type of the weapon. The last
+category is for all weapons not covered by the other 5, being considered
+"brawling". Also weapons should only increase a total of 1 stat.
+
+Weapons strengths are determined by their weapon level. Level 5 should
+be reserved for rare weapons.
+
+ Dmg.		W. Lvl		Lvl Req.
+------		------		-------
+
++5%		1		None
++10%		2		15
++20%		3		30
++30%		4		50
++50%		5		70
+
+Weapon		Att. Type
+------		---------
+
+Sword		Slash
+Dagger		Pierce
+Spear		Stab
+Club		Crush
+Gun		Blast
+Brawling	Any Other Type

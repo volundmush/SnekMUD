@@ -2,6 +2,7 @@ import orjson
 import os
 import glob
 import pathlib
+import asyncio
 import re
 import logging
 from typing import List, Optional, Dict, Union, Set
@@ -10,6 +11,8 @@ from rich.text import Text
 from enum import IntFlag, IntEnum
 from mudforge.forge.game import GameService as OldGame
 from mudforge.utils import generate_name, partial_match, import_from_module
+from snekmud.db.misc import Location, NewLocation, LocationType
+
 
 import snekmud
 
@@ -23,7 +26,7 @@ class AccountManager:
         self.dir = os.path.join(os.getcwd(), "accounts")
         pathlib.Path(self.dir).mkdir(exist_ok=True)
 
-    async def create(self, name: Union[Text, str], password: str, source: str=None) -> "Account":
+    async def create(self, name: str, password: str, source: str=None) -> "Account":
         if not self.re_name.match(name):
             raise ValueError("Account names must be simple.")
         if not password:
@@ -32,8 +35,6 @@ class AccountManager:
             raise ValueError("That account already exists!")
         acc_id = generate_name("acc", snekmud.ACCOUNTS.keys(), gen_length=8)
         acc_driver = snekmud.CLASSES["account_driver"]
-        if isinstance(name, str):
-            name = Text(name)
         acc = acc_driver(snekmud.CLASSES["account"](account_id=acc_id, name=name))
         await acc.set_password(password=password)
         if not len(snekmud.ACCOUNTS):
@@ -41,8 +42,7 @@ class AccountManager:
             acc.account.supervisor_level = 1000
         snekmud.ACCOUNTS[acc_id] = acc
 
-    async def find(self, name: Union[Text, str], exact=False) -> Optional["Account"]:
-        name = str(name)
+    async def find(self, name: str, exact=False) -> Optional["Account"]:
         if not exact:
             return partial_match(name, snekmud.ACCOUNTS.values())
         n = name.upper()
@@ -68,11 +68,8 @@ class AccountManager:
         search = p.glob("*.json")
         counter = 0
         for j in search:
-            with j.open(mode="rb") as f:
-                data = orjson.loads(f.read())
-                if "account_id" not in data:
-                    continue
-                acc = acc_driver(acc_class.from_dict(data))
+            with j.open(mode="r") as f:
+                acc = acc_driver(acc_class.from_json(f.read()))
                 snekmud.ACCOUNTS[acc.account.account_id] = acc
                 counter += 1
         return counter
@@ -81,14 +78,14 @@ class AccountManager:
         p = pathlib.Path(self.dir)
         counter = 0
         for k, v in snekmud.ACCOUNTS.items():
+            await asyncio.sleep(0)
             if not v:
                 continue
             if not v.dirty:
                 continue
             fp = p.joinpath(f"{k}.json")
-            with fp.open(mode="wb") as f:
-                f.write(orjson.dumps(v.account.to_dict()))
-                f.flush()
+            with fp.open(mode="w") as f:
+                f.write(v.account.to_json())
             counter += 1
         return counter
 
@@ -101,23 +98,20 @@ class CharacterManager:
         self.dir = os.path.join(os.getcwd(), "characters")
         pathlib.Path(self.dir).mkdir(exist_ok=True)
 
-    async def create(self, name: Union[str, Text], account: "Account") -> "MobileInstanceDriver":
-        if not self.re_name.match(name.plain):
+    async def create(self, name: str, account: "Account") -> "CharacterInstanceDriver":
+        if not self.re_name.match(name):
             raise ValueError("Character names must be simple.")
         if not account:
             raise ValueError("Must include an Account.")
         if await self.find(name, exact=True):
             raise ValueError("That character already exists!")
-        if isinstance(name, str):
-            name = Text(name)
         char_id = generate_name("char", snekmud.CHARACTERS.keys(), gen_length=8)
-        char = snekmud.CLASSES["mobile"](account_id=account.account_id, name=name)
+        char = snekmud.CLASSES["character"](account_id=account.account_id, name=name)
         character = snekmud.CLASSES["mobile_instance_driver"](char, char_id)
         snekmud.CHARACTERS[char_id] = character
         return character
 
-    async def find(self, name: Union[str, Text], exact=False) -> Optional["MobileInstanceDriver"]:
-        name = str(name)
+    async def find(self, name: str, exact=False) -> Optional["CharacterInstanceDriver"]:
         if not exact:
             return partial_match(name, snekmud.CHARACTERS.values())
         n = name.upper()
@@ -138,18 +132,16 @@ class CharacterManager:
 
     async def load(self) -> int:
         p = pathlib.Path(self.dir)
-        char_class = snekmud.CLASSES["mobile"]
-        char_driver = snekmud.CLASSES["mobile_instance_driver"]
+        char_class = snekmud.CLASSES["entity"]
+        char_driver = snekmud.INSTANCE_CLASSES["character"]
         search = p.glob("*.json")
         counter = 0
         for j in search:
             with j.open(mode="rb") as f:
-                data = orjson.loads(f.read())
-                if "character_id" not in data:
-                    continue
-                char = char_class.from_dict(data)
-                character = char_driver(char, char.character_id)
-                snekmud.CHARACTERS[char.character_id] = character
+                char = char_class.from_json(f.read())
+                char_id = char.character_data.player.character_id
+                character = char_driver(char, char_id, prototype=snekmud.PLAYER_PROTOTYPE)
+                snekmud.CHARACTERS[char_id] = character
                 counter += 1
         return counter
 
@@ -157,14 +149,12 @@ class CharacterManager:
         p = pathlib.Path(self.dir)
         counter = 0
         for k, v in snekmud.CHARACTERS.items():
+            await asyncio.sleep(0)
             if not v:
                 continue
-            if not v.dirty:
-                continue
             fp = p.joinpath(f"{k}.json")
-            with fp.open(mode="wb") as f:
-                f.write(orjson.dumps(v.export()))
-                f.flush()
+            with fp.open(mode="w") as f:
+                f.write(v.entity.to_json())
             counter += 1
         return counter
 
@@ -175,11 +165,16 @@ class GameService(OldGame):
         super().__init__(**kwargs)
         self.accounts = AccountManager(self)
         self.characters = CharacterManager(self)
+        self.text_files = dict()
+
+    async def game_loop(self):
+        for v in snekmud.ENTITY_INSTANCES:
+            await v.update(self.current_tick)
 
     async def prepare_characters(self) -> Set[str]:
         no_match = set()
         for k, v in snekmud.CHARACTERS.items():
-            if not (acc := snekmud.ACCOUNTS.get(v.account_id, None)):
+            if not (acc := snekmud.ACCOUNTS.get(v.entity.character_data.player.account_id, None)):
                 no_match.add(k)
                 continue
             acc.characters[k] = v
@@ -187,11 +182,37 @@ class GameService(OldGame):
             snekmud.CHARACTERS.pop(k, None)
         return no_match
 
-    async def create_or_join_session(self, cmd: "CommandEntry", character: "MobileInstanceDriver"):
-        if not (char_id := character.mobile.character_id):
+    async def prepare_zones(self):
+        for k, v in snekmud.ZONES.items():
+            await v.setup()
+
+    async def prepare_rooms(self):
+        for k, v in snekmud.ROOMS.items():
+            await v.setup()
+
+    async def create_or_join_session(self, cmd: "CommandEntry", character: "CharacterInstanceDriver"):
+        if not (char_id := character.entity.character_data.player.character_id):
             raise ValueError("That is not a player character!")
         if not (session := snekmud.SESSIONS.get(char_id, None)):
             session = snekmud.CLASSES["session"](cmd.connection.user, character)
             snekmud.SESSIONS[char_id] = session
+            snekmud.ENTITY_INSTANCES.add(character)
+            logging.info(f"Creating Session for Character {character}: {char_id}")
             await session.on_init()
+        logging.info(f"Adding Connection {cmd.connection} to Session {char_id}")
         await session.add_connection(cmd.connection)
+
+    async def get_location(self, loc: Location) -> Optional["RoomDriver"]:
+        if not loc:
+            return None
+        elif isinstance(loc, int):
+            # we are searching for a plain room vnum.
+            return snekmud.ROOMS.get(loc, None)
+        elif isinstance(loc, NewLocation):
+            # we are doing a new-style location.
+            if not (module := snekmud.MODULES.get(loc[0], None)):
+                return None
+            if not (instance := module.instances.get(loc[1], None)):
+                return None
+            return instance.find_location(loc[2], loc[3])
+        return None
