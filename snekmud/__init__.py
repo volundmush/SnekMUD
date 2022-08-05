@@ -1,37 +1,22 @@
+import esper
 from collections import defaultdict
 
-ZONES = dict()
+WORLD = esper.World()
 
-ACCOUNTS = dict()
+MODULES = {}
 
-CHARACTERS = dict()
+COMPONENTS = {}
 
-MOBILE_PROTOTYPES = dict()
+MODIFIERS_NAMES = defaultdict(dict)
 
-ROOMS = dict()
+MODIFIERS_ID = defaultdict(dict)
 
-THING_PROTOTYPES = dict()
+EQUIP_SLOTS = defaultdict(dict)
 
-SCRIPT_PROTOTYPES = dict()
+PLAYER_ID = dict()
 
-SHOPS = dict()
+OPERATIONS = dict()
 
-FACTIONS = dict()
+CMDHANDLERS = defaultdict(dict)
 
-CLASSES = dict()
-
-SERVICES = dict()
-
-CONFIG = dict()
-
-SHARED = dict()
-
-COMMAND_HANDLERS = dict()
-
-COMMANDS = dict()
-
-SESSIONS = dict()
-
-CONNECTIONS = dict()
-
-GAME = None
+COMMANDS = defaultdict(lambda: defaultdict(list))

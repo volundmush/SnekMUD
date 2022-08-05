@@ -1,49 +1,49 @@
+from snekmud.utils import callables_from_module
 import snekmud
-import logging
-from aiomisc import receiver, entrypoint, get_context
-from mudforge.utils import import_from_module
+import mudforge
+import os
+import sys
+
+
+def early_launch():
+    os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+    import django
+    from django.conf import settings
+    from server.conf import django_settings
+    settings.configure(default_settings=django_settings)
+    django.setup()
 
 
 async def pre_start(entrypoint=None, services=None):
-    context = get_context()
-    snekmud.CONFIG = await context["config"]
-    snekmud.SHARED = await context["shared"]
-    snekmud.SERVICES = await context["services"]
-    snekmud.CLASSES = await context["classes"]
+    mod_paths = mudforge.CONFIG.MODIFIERS
 
-    logging.info("SnekMUD loading...")
-    snekmud.GAME = snekmud.SERVICES["game"]
-    snekmud.CONNECTIONS = await context["connections"]
+    for mod_path in mod_paths:
+        for k, v in callables_from_module(mod_path).items():
+            snekmud.MODIFIERS_NAMES[v.category][v.get_name()] = v
+            snekmud.MODIFIERS_ID[v.category][v.modifier_id] = v
 
-    command_counter = 0
-    for category, entries in snekmud.CONFIG.get("commands", dict()).items():
-        snekmud.COMMANDS[category] = [import_from_module(c) for c in entries]
-        command_counter += len(entries)
+    for com_path in mudforge.CONFIG.COMPONENTS:
+        snekmud.COMPONENTS.update(callables_from_module(com_path))
 
-    logging.info(f"Found {command_counter} commands in {len(snekmud.COMMANDS)} categories.")
+    # load command classes.
+    for cmd_path in mudforge.CONFIG.COMMAND_PATHS:
+        for k, v in callables_from_module(cmd_path).items():
+            if not hasattr(v, "execute"):
+                continue
+            for sub in v.sub_categories:
+                snekmud.COMMANDS[v.main_category][sub].append(v)
 
-    for category, path in snekmud.CONFIG.get("command_handlers", dict()).items():
-        snekmud.COMMAND_HANDLERS[category] = import_from_module(path)
+    # now to sort the commands.
+    for k, v in snekmud.COMMANDS.items():
+        for subcat, cmds in v.items():
+            cmds.sort(key=lambda x: x.priority)
 
-    logging.info(f"Found {len(snekmud.COMMAND_HANDLERS)} command handlers.")
+    for p in mudforge.CONFIG.EQUIP_CLASS_PATHS:
+        slots = callables_from_module(p)
+        for k, v in slots.items():
+            if not v.key and v.category:
+                continue
+            snekmud.EQUIP_SLOTS[v.category][v.key] = v
 
-    accounts = await snekmud.GAME.accounts.load()
-    logging.info(f"Found and loaded {accounts} User Accounts.")
-    characters = await snekmud.GAME.characters.load()
-    logging.info(f"Found and loaded {characters} player characters.")
-
-    no_accounts = await snekmud.GAME.prepare_characters()
-    if no_accounts:
-        logging.warning(f"Found {len(no_accounts)} with missing Accounts, which were not loaded: {', '.join(no_accounts)}")
-
-
-async def post_start(entrypoint=None, services=None):
-    pass
-
-
-async def pre_stop(ep: entrypoint):
-    pass
-
-
-async def post_stop(ep: entrypoint):
-    pass
+    for op_path in mudforge.CONFIG.OPERATION_CLASS_PATHS:
+        snekmud.OPERATIONS.update({k: v for k, v in callables_from_module(op_path).items() if hasattr(v, "execute")})

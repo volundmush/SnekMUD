@@ -1,0 +1,1 @@
+from snekmud.django_settings_default import *

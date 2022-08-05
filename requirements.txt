@@ -1,5 +1,11 @@
 mudforge
-passlib
-tortoise-orm
+esper
+kdtree
+rtree
+dataclasses-json
 orjson
-argon2_cffi
+django
+django-idmap
+ruamel.yaml
+django-yamlfield
+argon2-cffi

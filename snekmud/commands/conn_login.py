@@ -1,11 +1,13 @@
 import re
 import snekmud
 
-from .base import Command, BaseCommandHandler
+from .base import Command, ConnectionCommandHandler
+from snekmud.exceptions import CommandError
+from snekmud.db.accounts.models import Account
 
 
-class LoginHandler(BaseCommandHandler):
-    category = "connection_login"
+class LoginHandler(ConnectionCommandHandler):
+    sub_category = "login"
 
 
 class _LoginCommand(Command):
@@ -13,6 +15,8 @@ class _LoginCommand(Command):
     Simple bit of logic added for the login commands to deal with syntax like:
     connect "user name" password
     """
+    main_category = "connection"
+    sub_category = "login"
 
     re_quoted = re.compile(
         r'^"(?P<name>.+)"(: +(?P<password>.+)?)?', flags=re.IGNORECASE
@@ -25,14 +29,14 @@ class _LoginCommand(Command):
     def parse_login(self, error):
         mdict = self.match_obj.groupdict()
         if not mdict["args"]:
-            raise ValueError(error)
+            raise CommandError(error)
 
         result = self.re_quoted.match(mdict["args"])
         if not result:
             result = self.re_unquoted.match(mdict["args"])
         rdict = result.groupdict()
         if not (rdict["name"] and rdict["password"]):
-            raise ValueError(error)
+            raise CommandError(error)
         return rdict["name"], rdict["password"]
 
 
@@ -56,7 +60,8 @@ class ConnectCommand(_LoginCommand):
 
     async def execute(self):
         name, password = self.parse_login(self.usage)
-        await self.user.check_login(name, password)
+        await self.connection.check_login(name, password)
+
 
 
 class CreateCommand(_LoginCommand):
@@ -79,5 +84,5 @@ class CreateCommand(_LoginCommand):
 
     async def execute(self):
         name, password = self.parse_login(self.usage)
-        await snekmud.GAME.accounts.create(name, password, source=self.user)
-        await self.user.msg(text=f"User '{name}' created!")
+        Account.objects.create_user(username=name, password=password)
+        await self.send_line(text=f"User '{name}' created!")
