@@ -1,5 +1,5 @@
 from django.db import models
-from idmap import models as idmodels
+from snekmud.db.idmap import models as idmodels
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.utils.translation import gettext_lazy as _
@@ -20,6 +20,8 @@ class SimpleUserNameValidator(validators.RegexValidator):
 
 
 class Account(idmodels.IdMapModel, AbstractBaseUser, PermissionsMixin):
+    USERNAME_FIELD = "username"
+
     username_validator = SimpleUserNameValidator()
     objects = UserManager()
 

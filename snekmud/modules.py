@@ -12,11 +12,11 @@ import logging
 
 class Prototype:
 
-    def __init__(self, module, name, ent: Entity):
+    def __init__(self, module, name, data):
         self.module = module
         self.name = name
         self.entities = dict()
-        self.ent = ent
+        self.data = data
 
 
 class Module:
@@ -31,6 +31,9 @@ class Module:
 
     def __str__(self):
         return self.name
+
+    async def load_init(self):
+        pass
 
     async def load_maps(self):
         m_dir = self.path / "maps"
@@ -71,9 +74,8 @@ class Module:
             data = read_data_file(d)
             if not data:
                 continue
-            p_ent = deserialize_entity(data)
-            WORLD.add_component(p_ent, cm.Prototype(module_name=self.name, prototype=key))
-            self.prototypes[key] = Prototype(self, key, p_ent)
+            data["Prototype"] = {"module_name": self.name, "prototype": key}
+            self.prototypes[key] = Prototype(self, key, data)
 
     async def load_entities_initial(self):
         e_dir = self.path / "prototypes"
@@ -108,12 +110,3 @@ class Module:
             self.entities[new_id] = ent
             p.entities[new_id] = ent
         return new_id
-
-
-class SystemModule(Module):
-
-    async def load_entities_initial(self):
-        await super().load_entities_initial()
-        for c in PlayerCharacter.objects.all():
-            c_ent = deserialize_entity(c.data)
-            PLAYER_ID[c.id] = c_ent

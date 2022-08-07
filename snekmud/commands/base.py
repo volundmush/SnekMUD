@@ -1,12 +1,13 @@
-from typing import List, Optional, Union, Tuple
+from typing import List, Optional
 import snekmud
-from mudforge.utils import lazy_property
 import mudforge
-from mudrich.evennia import EvenniaToRich
-from mudrich.circle import CircleToRich
+from snekmud import exceptions as ex
 
+class MetaCommand(type):
+    def __repr__(cls):
+        return f"<{cls.__name__}: {cls.name}>"
 
-class Command:
+class Command(metaclass=MetaCommand):
     name = None  # Name must be set to a string!
     aliases = []
     help_category = None
@@ -14,9 +15,10 @@ class Command:
     min_text = None
     main_category = None
     sub_categories = []
+    ex = ex.CommandError
 
     @classmethod
-    async def access(cls, user: "HasCommandHandler") -> bool:
+    async def access(cls, **kwargs) -> bool:
         """
         This returns true if <enactor> is able to see and use this command.
         Use this for admin permissions locks as well as conditional access, such as
@@ -28,11 +30,12 @@ class Command:
     async def help(cls, user: "HasCommandHandler"):
         """
         This is called by the command-help system if help is called on this command.
+        It should return markdown text to display.
         """
         pass
 
     @classmethod
-    async def match(cls, match_obj, partial: bool = False, **kwargs):
+    async def match(cls, handler, match_obj, partial: bool = False, **kwargs):
         """
         Called by the CommandGroup to determine if this command matches.
         Returns False or a Regex Match object.
@@ -44,13 +47,13 @@ class Command:
         clower = cmd.lower()
         nlower = cls.name.lower()
         if clower == nlower:
-            return cls(match_obj, **kwargs)
+            return cls(handler, match_obj, **kwargs)
         for x in cls.aliases:
             if clower == x.lower():
-                return cls(match_obj, **kwargs)
+                return cls(handler, match_obj, **kwargs)
         if partial and cls.min_text:
             if nlower.startswith(clower) and clower.startswith(cls.min_text.lower()):
-                return cls(match_obj, **kwargs)
+                return cls(handler, match_obj, **kwargs)
         return None
 
     def __init__(self, handler, match_obj, **kwargs):
@@ -59,6 +62,7 @@ class Command:
         """
         self.handler = handler
         self.match_obj = match_obj
+        self.kwargs = kwargs
         self.__dict__.update(kwargs)
         self.__dict__.update(match_obj.groupdict())
         self.parse()
@@ -67,7 +71,7 @@ class Command:
         pass
 
     async def at_pre_execute(self):
-        pass
+        return True
 
     async def execute(self):
         pass
@@ -75,29 +79,8 @@ class Command:
     async def at_post_execute(self):
         pass
 
-    def send_text(self, s: str):
-        self.handler.send_text(s)
-
-    def send_line(self, s: str):
-        self.handler.send_line(s)
-
-    def send(self, s: str):
-        self.handler.send_line(s)
-
-    def send_ev(self, s: str):
-        self.handler.send_ev(s)
-
-    def send_circle(self, s: str):
-        self.handler.send_circle(s)
-
-
-class HasCommandHandler:
-
-    async def set_cmd_handler(self, handler_class, **kwargs):
-        if self.cmd_handler:
-            await self.cmd_handler.cleanup()
-        self.cmd_handler = handler_class(self, **kwargs)
-        await self.cmd_handler.start()
+    def send(self, **kwargs):
+        self.handler.send(**kwargs)
 
 
 class BaseCommandHandler:
@@ -123,34 +106,45 @@ class BaseCommandHandler:
     async def get_special_commands(self) -> List["Command_Class"]:
         return list()
 
-    async def special_match(self, cmd: str, **kwargs) -> Optional["Command"]:
-        for c in await self.get_special_commands():
-            if (cmd := await c.match(cmd, partial=self.partial_special, **kwargs)):
+    async def do_match(self, cmd_match, find_func: str, partial: bool, **kwargs) -> Optional["Command"]:
+        for c in await getattr(self, find_func)():
+            if await c.access(**kwargs) and (cmd := await c.match(self, cmd_match, partial=partial, **kwargs)):
                 return cmd
+
+    async def special_match(self, cmd_match, **kwargs) -> Optional["Command"]:
+        return await self.do_match(cmd_match, "get_special_commands", self.partial_special, **kwargs)
+
+    async def normal_match(self, cmd_match, **kwargs) -> Optional["Command"]:
+        return await self.do_match(cmd_match, "get_commands", self.partial_normal, **kwargs)
+
+    async def reg_match(self, cmd: str):
+        return mudforge.CONFIG.CMD_MATCH.match(cmd)
+
+    async def find_cmd(self, cmd_match):
+        kwargs = await self.generate_kwargs()
+        if not (c := await self.special_match(cmd_match, **kwargs)):
+            c = await self.normal_match(cmd_match, **kwargs)
+        return c
 
     async def parse(self, cmd: str):
-        kwargs = await self.generate_kwargs()
-        if not (c := await self.special_match(cmd, **kwargs)):
-            c = await self.normal_match(cmd, **kwargs)
-
-        if c:
-            await self.found_match(c)
-        else:
-            await self.no_match(cmd)
+        if (cmd_match := await self.reg_match(cmd)):
+            if (c := await self.find_cmd(cmd_match)):
+                await self.found_match(c)
+                return
+        await self.no_match(cmd)
 
     async def no_match(self, cmd: str):
-        await self.owner.msg(line=f"No command for: {cmd if len(cmd) < 20 else cmd[0:20] + '...'}. Type 'help' for help!")
-
-    async def normal_match(self, cmd: str, **kwargs) -> Optional["Command"]:
-        for c in await self.get_commands():
-            if (cmd := await c.match(self.owner, cmd, partial=self.partial_normal, **kwargs)):
-                return cmd
+        self.send(line=f"No command for: {cmd if len(cmd) < 20 else cmd[0:20] + '...'}. Type 'help' for help!")
 
     async def found_match(self, cmd):
         try:
-            await cmd.execute()
-        except ValueError as err:
-            await self.owner.msg(text=str(err), system_msg=True)
+            if await cmd.at_pre_execute():
+                await cmd.execute()
+                await cmd.at_post_execute()
+        except ex.CommandError as err:
+            self.send(line=str(err))
+        except ex.DatabaseError as err:
+            self.send(line=str(err))
 
     async def cleanup(self):
         pass
@@ -169,20 +163,8 @@ class BaseCommandHandler:
         Presumably used to process pending commands.
         """
 
-    def send_line(self, s: str):
-        self.owner.send_line(s)
-
-    def send_text(self, s: str):
-        self.owner.send_text(s)
-
-    def send(self, s: str):
-        self.send_line(s)
-
-    def send_ev(self, s):
-        self.owner.send_line(EvenniaToRich(s))
-
-    def send_circle(self, s):
-        self.owner.send_line(CircleToRich(s))
+    def send(self, **kwargs):
+        self.owner.send(**kwargs)
 
 
 class ConnectionCommandHandler(BaseCommandHandler):
@@ -194,16 +176,24 @@ class ConnectionCommandHandler(BaseCommandHandler):
             out["account"] = self.owner.account
         return out
 
+
 class GameSessionCommandHandler(BaseCommandHandler):
     main_category = "session"
 
+    async def get_user(self):
+        return self.owner.owner
+
     async def generate_kwargs(self):
-        return {"session": self.owner,
+        return {"session": self.owner.owner,
                 "character": self.owner.character,
                 "entity": self.owner.puppet}
+
 
 class EntityCommandHandler(BaseCommandHandler):
     main_category = "entity"
 
     async def generate_kwargs(self):
-        return {"entity": self.owner.entity}
+        out = {"entity": self.owner.entity}
+        if self.owner.session:
+            out.update({"session": self.owner.session, "account": self.owner.session.account})
+        return out

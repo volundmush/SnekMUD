@@ -29,9 +29,10 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.messages",
-    "idmap",
+    "snekmud.db.idmap",
     "snekmud.db.accounts",
-    "snekmud.db.players"
+    "snekmud.db.players",
+    "snekmud.db.gamesessions"
 ]
 
 AUTH_USER_MODEL = "accounts.Account"

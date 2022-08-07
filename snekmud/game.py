@@ -25,12 +25,15 @@ class GameService(OldGame):
             meta_path = p / "meta.yaml"
             if meta_path.exists() and meta_path.is_file():
                 meta_data = read_yaml_file(meta_path)
-                if (m_class_path := meta_data.get("class", None)):
+                if meta_data and (m_class_path := meta_data.get("class", None)):
                     module_class = import_from_module(m_class_path)
             m = module_class(p.name, p, self.save_root / p.name)
             snekmud.MODULES[m.name] = m
 
         logging.info(f"Discovered {len(snekmud.MODULES)} modules!")
+
+        for k, v in snekmud.MODULES.items():
+            await v.load_init()
 
         for k, v in snekmud.MODULES.items():
             await v.load_maps()

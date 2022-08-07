@@ -1,8 +1,8 @@
 from snekmud.utils import callables_from_module
+from mudforge.utils import import_from_module
 import snekmud
 import mudforge
 import os
-import sys
 
 
 def early_launch():
@@ -45,5 +45,15 @@ async def pre_start(entrypoint=None, services=None):
                 continue
             snekmud.EQUIP_SLOTS[v.category][v.key] = v
 
+    snekmud.PY_DICT["snekmud"] = snekmud
+    snekmud.PY_DICT["mudforge"] = mudforge
+
+    for category, v in mudforge.CONFIG.CMDHANDLERS.items():
+        for sub_category, path in v.items():
+            snekmud.CMDHANDLERS[category][sub_category] = import_from_module(path)
+
     for op_path in mudforge.CONFIG.OPERATION_CLASS_PATHS:
         snekmud.OPERATIONS.update({k: v for k, v in callables_from_module(op_path).items() if hasattr(v, "execute")})
+
+    from snekmud.db.gamesessions.models import GameSession
+    GameSession.objects.all().delete()

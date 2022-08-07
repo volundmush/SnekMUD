@@ -6,8 +6,8 @@ from snekmud.exceptions import CommandError
 from snekmud.db.accounts.models import Account
 
 
-class LoginHandler(ConnectionCommandHandler):
-    sub_category = "login"
+class ConnectionLoginCmdHandler(ConnectionCommandHandler):
+    sub_categories = ["login"]
 
 
 class _LoginCommand(Command):
@@ -16,7 +16,7 @@ class _LoginCommand(Command):
     connect "user name" password
     """
     main_category = "connection"
-    sub_category = "login"
+    sub_categories = ["login"]
 
     re_quoted = re.compile(
         r'^"(?P<name>.+)"(: +(?P<password>.+)?)?', flags=re.IGNORECASE

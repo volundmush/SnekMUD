@@ -7,7 +7,7 @@ from enum import IntEnum
 import kdtree
 import sys
 from mudforge.utils import lazy_property
-from mudrich.circle import CircleToRich, CircleStrip
+from mudrich.evennia import EvenniaToRich, strip_ansi
 import snekmud
 from snekmud.serialize import deserialize_entity, serialize_entity
 
@@ -236,10 +236,14 @@ class StringBase(_Save):
     def __init__(self, s: str):
         self.color = sys.intern(s)
         if self.color not in self.rich_cache:
-            self.rich_cache[self.color] = CircleToRich(s)
+            self.rich_cache[self.color] = EvenniaToRich(s)
 
     def __str__(self):
         return self.plain
+
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__}: {self.color}>"
 
     @property
     def plain(self):
@@ -304,21 +308,8 @@ class ExDescriptions(_Save):
             o.ex_descriptions.append((Name(k), Description(d)))
         return o
 
-
+@dataclass_json
 @dataclass
-class Session(_Save):
-    connections: set["GameConnection"] = field(default_factory=set)
-    character: Entity = -1
-    puppet: Entity = -1
-
-    def export(self):
-        data = {}
-        data["connections"] = [c.conn_id for c in self.connections]
-        if snekmud.WORLD.entity_exists(self.character):
-            data["character"] = snekmud.WORLD.get_component(self.character, EntityID).export()
-        return data
-
-
 class HasCmdHandler(_NoSave):
     cmdhandler: "Parser" = None
     session: "GameSession" = None
@@ -326,7 +317,7 @@ class HasCmdHandler(_NoSave):
 
     async def set_cmdhandler(self, cmdhandler: str, **kwargs):
         if not (p := snekmud.CMDHANDLERS["Entity"].get(cmdhandler, None)):
-            self.send(f"ERROR: CmdHandler {cmdhandler} not found for GameSessions, contact staff")
+            self.send(line=f"ERROR: CmdHandler {cmdhandler} not found for GameSessions, contact staff")
             return
         if self.cmdhandler:
             await self.cmdhandler.close()

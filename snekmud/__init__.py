@@ -20,3 +20,7 @@ OPERATIONS = dict()
 CMDHANDLERS = defaultdict(dict)
 
 COMMANDS = defaultdict(lambda: defaultdict(list))
+
+PY_DICT = dict()
+
+STATIC_TEXT = dict()

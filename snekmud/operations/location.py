@@ -85,14 +85,18 @@ class UnequipFromEntity:
     comp = "Equipment"
     rev_comp = "Equipped"
 
-    def __init__(self, ent: Entity):
+    def __init__(self, ent: Entity, **kwargs):
+        self.ent = ent
+        self.kwargs = kwargs
+
+    async def execute(self):
         equipped = COMPONENTS[self.rev_comp]
-        if (i := WORLD.get_component(ent, equipped)):
+        if (i := WORLD.get_component(self.ent, equipped)):
             e = WORLD.get_component(i.holder)
             e.equipment.pop(i.slot, None)
             if not e.equipment:
                 WORLD.remove_component(i.holder, COMPONENTS[self.comp])
-            WORLD.remove_component(ent, equipped)
+            WORLD.remove_component(self.ent, equipped)
 
 
 class AddToRoom(AddToInventory):
@@ -141,3 +145,17 @@ class DumpEquipment:
         return list(i.equipment.values())
 
 
+class RemoveFromLocation:
+
+    def __init__(self, ent, move_type: str = "move", **kwargs):
+        self.ent = ent
+        self.move_type = move_type
+        self.kwargs = kwargs
+
+    async def execute(self):
+        if WORLD.has_component(self.ent, COMPONENTS["Equipped"]):
+            await OPERATIONS["UnequipFromEntity"](self.ent).execute()
+        elif WORLD.has_component(self.ent, COMPONENTS["InInventory"]):
+            await OPERATIONS["RemoveFromInventory"](self.ent, move_type=self.move_type, **self.kwargs).execute()
+        elif WORLD.has_component(self.ent, COMPONENTS["InRoom"]):
+            await OPERATIONS["RemoveFromRoom"](self.ent, move_type=self.move_type, **self.kwargs).execute()
