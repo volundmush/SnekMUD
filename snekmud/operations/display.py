@@ -30,7 +30,8 @@ class GetDisplayName:
 
 class DistributeMessage:
 
-    def __init__(self, text: str, recipients: list[Entity], msg_type=None, from_obj=None, mapping=None, oob=None, **kwargs):
+    def __init__(self, text: str, recipients: list[Entity], msg_type=None, from_obj=None, mapping=None, oob=None,
+                 check_visible: bool = False, **kwargs):
         """
         Render and distribute a message to all recipients.
 
@@ -52,12 +53,15 @@ class DistributeMessage:
                 be auto-added to point to `from_obj` if given.
             oob (dict, optional): Any OOB data that should be sent with the formatted message.
                 This will only be sent if the message itself is.
+            check_visible (bool): If True, recipients who cannot detect from_obj will be excluded.
             **kwargs: Keyword arguments retained for any overloading.
         """
         self.text = text
         self.recipients = recipients
         self.from_obj = from_obj
         self.mapping = mapping
+        self.oob = oob
+        self.check_visible = check_visible
         self.kwargs = kwargs
 
     async def execute(self):
@@ -68,7 +72,8 @@ class MsgContents:
     Emits a message to all objects inside this object.
     """
 
-    def __init__(self, ent, text=None, msg_type=None, exclude=None, from_obj=None, mapping=None, oob=None, **kwargs):
+    def __init__(self, ent, text=None, msg_type=None, exclude=None, from_obj=None, mapping=None, oob=None,
+                 check_visible: bool = False, **kwargs):
         self.ent = ent
         self.text = text
         self.msg_type = msg_type
@@ -76,6 +81,7 @@ class MsgContents:
         self.from_obj = from_obj
         self.mapping = mapping
         self.oob = oob
+        self.check_visible = check_visible
         self.kwargs = kwargs
 
     async def execute(self):
@@ -83,8 +89,9 @@ class MsgContents:
         for x in self.exclude:
             if x in contents:
                 contents.remove(x)
-        await OPERATIONS["DistributeMessage"](text, contents, msg_type=self.msg_type, from_obj=self.from_obj,
-                                                      mapping=self.mapping, oob=self.oob, **self.kwargs)
+        await OPERATIONS["DistributeMessage"](self.text, contents, msg_type=self.msg_type, from_obj=self.from_obj,
+                                              mapping=self.mapping, oob=self.oob, check_visible=self.check_visible,
+                                              **self.kwargs).execute()
 
 
 class DisplayRoom:

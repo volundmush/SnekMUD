@@ -1,3 +1,4 @@
+
 class EquipSlot:
     key = None
     category = None
@@ -19,8 +20,6 @@ class EquipSlot:
     def display_contents(self, looker, **kwargs):
         return self.item.get_display_name(looker=looker, **kwargs)
 
-
     @classmethod
     def is_available(cls, equipper, **kwargs):
         return True
-

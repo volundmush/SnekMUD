@@ -16,7 +16,7 @@ class GameService(OldGame):
     async def at_post_module_initial_load(self):
         pass
 
-    async def on_start(self):
+    async def load_initial(self):
         logging.info(f"Loading game database from {self.mod_path}")
         default_module = CLASSES["default_module"]
 
@@ -32,6 +32,7 @@ class GameService(OldGame):
 
         logging.info(f"Discovered {len(snekmud.MODULES)} modules!")
 
+    async def load_middle(self):
         for k, v in snekmud.MODULES.items():
             await v.load_init()
 
@@ -41,8 +42,7 @@ class GameService(OldGame):
         for k, v in snekmud.MODULES.items():
             await v.load_prototypes()
 
-        await self.at_post_module_initial_load()
-
+    async def load_finish(self):
         logging.info("Performing initial entity load from database.")
         for k, v in snekmud.MODULES.items():
             await v.load_entities_initial()

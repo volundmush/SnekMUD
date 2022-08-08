@@ -32,11 +32,21 @@ class GameSessionHandler:
     def __init__(self, owner):
         self.owner = owner
         self.connections = dict()
-        self.account = None
+        self.account = owner.account
         self.character = None
         self.puppet = None
         self.cmdhandler = None
+        self.cmdhandler_name = None
         self.time_last_activity = time.monotonic()
+
+    def copyover_export(self) -> dict:
+        out = {"time_last_activity": self.time_last_activity,
+               "cmdhandler": self.cmdhandler_name}
+        return out
+
+    async def copyover_recover(self, data):
+        self.time_last_activity = data.pop("time_last_activity")
+        await self.at_start(copyover=True, cmdhandler=data.pop("cmdhandler"))
 
     def send(self, **kwargs):
         for c in self.connections.values():
@@ -49,6 +59,7 @@ class GameSessionHandler:
         if self.cmdhandler:
             await self.cmdhandler.close()
         self.cmdhandler = p(self, **kwargs)
+        self.cmdhandler_name = cmdhandler
         await self.cmdhandler.start()
 
     async def process_input_text(self, data: str):
@@ -62,15 +73,15 @@ class GameSessionHandler:
     def time_idle(self):
         return time.monotonic() - self.time_last_activity
 
-    async def at_start(self):
+    async def at_start(self, copyover=None, cmdhandler: str = "Puppet"):
         """
         Called when the GameSession object is started.
         This should prepare the character for play, display updates
         to the player, etc.
         """
-        await self.set_cmdhandler("Puppet")
-        await self.deserialize_character()
-        await self.deploy_character()
+        await self.set_cmdhandler(cmdhandler)
+        await self.deserialize_character(copyover)
+        await self.deploy_character(copyover)
 
     loc_last = "You appear right where you left off."
     loc_none = "Cannot find a safe place to put you. Contact staff!"
@@ -82,12 +93,12 @@ class GameSessionHandler:
                 return ent, self.loc_last
         return None, self.loc_none
 
-    async def deserialize_character(self):
+    async def deserialize_character(self, copyover=None):
         data = dict(self.owner.id.data)
         if (eq := self.owner.id.equipment):
             data["Equipment"] = eq
         if (inv := self.owner.id.inventory):
-            data["inventory"] = inv
+            data["Inventory"] = inv
         self.character = deserialize_entity(data)
         self.puppet = self.character
         c = self.character
@@ -95,7 +106,7 @@ class GameSessionHandler:
         snekmud.WORLD.add_component(c, cmd)
         await cmd.set_cmdhandler("Play")
 
-    async def deploy_character(self):
+    async def deploy_character(self, copyover=None):
         loc_ent, loc_msg = await self.find_start_room()
 
         if not loc_ent:
@@ -105,7 +116,7 @@ class GameSessionHandler:
         c = self.character
 
         await snekmud.OPERATIONS["AddToRoom"](c, loc_ent, move_type="login").execute()
-        await snekmud.OPERATIONS["MsgContents"](text="$You() has entered the game.", exclude=c, from_obj=c)
+        await snekmud.OPERATIONS["MsgContents"](loc_ent, text="$You() has entered the game.", exclude=c, from_obj=c).execute()
 
     async def possess(self, ent, msg=None):
         if msg is None:
@@ -162,6 +173,7 @@ class GameSessionHandler:
         for conn in list(self.connections.values()):
             await self.remove_connection(conn, expected=True)
         self.owner.delete()
+
     async def add_connection(self, conn):
         conn.session = self.owner
         self.connections[conn.conn_id] = conn

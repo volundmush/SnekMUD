@@ -5,8 +5,10 @@ NAME = "SnekMUD"
 
 SERVICES["game"] = "snekmud.game.GameService"
 
-HOOKS["pre_start"].append("snekmud.hooks.pre_start")
 HOOKS["early_launch"].append("snekmud.hooks.early_launch")
+HOOKS["cold_start"].append("snekmud.hooks.cold_start")
+HOOKS["copyover"].append("snekmud.hooks.copyover")
+HOOKS["copyover_recover_stage_2"].append("snekmud.hooks.copyover_recover_stage_2")
 
 COMPONENTS = [
     "snekmud.components"
@@ -37,3 +39,5 @@ CMD_MATCH = re.compile(r"^(?P<cmd>(?P<prefix>[\|@\+\$-]+)?(?P<name>\w+))(?P<full
 
 COMMAND_PATHS = ["snekmud.commands.conn_account", "snekmud.commands.conn_login", "snekmud.commands.conn_universal",
                  "snekmud.commands.conn_session", "snekmud.commands.ent_play", "snekmud.commands.sess_puppet"]
+
+METATYPE_INTEGRITY = defaultdict(list)

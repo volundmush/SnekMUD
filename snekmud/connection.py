@@ -11,12 +11,39 @@ from rich.text import Text
 class GameConnection(OldConn):
     rich_kwargs = ["text", "line", "prompt"]
 
+    def export_copyover(self) -> dict:
+        out = super().export_copyover()
+        if self.account:
+            out["account"] = self.account.id
+        if self.session:
+            out["session"] = self.session.id.id
+        out["cmdhandler"] = self.cmdhandler_name
+        out["time_last_activity"] = time.time()
+        return out
+
+    @classmethod
+    async def from_copyover(cls, conn, data):
+        out = cls(conn)
+        if (last := data.pop("time_last_activity", None)):
+            out.time_last_activity = last
+        if (acc_id := data.pop("account", None)) is not None:
+            out.account = Account.objects.get(id=acc_id)
+        if (cmd_name := data.pop("cmdhandler", None)):
+            await out.set_cmdhandler(cmd_name)
+        if (sess_id := data.pop("session")):
+            sess = GameSession.objects.get(id=sess_id)
+            await sess.handler.add_connection(out)
+        return out
+
     def __init__(self, conn):
         super().__init__(conn)
         self.account = None
         self.cmdhandler = None
+        self.cmdhandler_name = None
         self.session = None
         self.time_last_activity = time.time()
+
+
 
     def write(self, b: str):
         """
@@ -30,13 +57,11 @@ class GameConnection(OldConn):
         Do not remove. Dummy method related to IO writing interface.
         """
 
-    async def start(self):
-        await self.on_start()
-
-    async def on_start(self):
-        if (text := snekmud.STATIC_TEXT.get("greet", None)):
-            self.send_line(text)
-        await self.set_cmdhandler("Login")
+    async def start(self, copyover=False):
+        if not copyover:
+            if (text := snekmud.STATIC_TEXT.get("greet", None)):
+                self.send_line(text)
+            await self.set_cmdhandler("Login")
 
     async def set_cmdhandler(self, cmdhandler: str, **kwargs):
         if not (p := snekmud.CMDHANDLERS["Connection"].get(cmdhandler, None)):
@@ -45,6 +70,7 @@ class GameConnection(OldConn):
         if self.cmdhandler:
             await self.cmdhandler.close()
         self.cmdhandler = p(self, **kwargs)
+        self.cmdhandler_name = cmdhandler
         await self.cmdhandler.start()
 
     async def process_input_text(self, data: str):

@@ -1,5 +1,5 @@
 from snekmud.typing import Entity
-from snekmud import WORLD, COMPONENTS
+from snekmud import WORLD, COMPONENTS, METATYPE_INTEGRITY
 import mudforge
 
 
@@ -15,6 +15,13 @@ def serialize_entity(ent: Entity) -> dict:
     return data
 
 
+def integrity_check(ent: Entity):
+    if (meta_comp := WORLD.try_component(ent, COMPONENTS["MetaTypes"])):
+        for t in meta_comp.types:
+            for func in METATYPE_INTEGRITY.get(t, list()):
+                func(ent)
+
+
 def deserialize_entity(data: dict, register=False) -> Entity:
     ent = WORLD.create_entity()
 
@@ -22,6 +29,12 @@ def deserialize_entity(data: dict, register=False) -> Entity:
         if k not in data:
             continue
         WORLD.add_component(ent, v.deserialize(data.pop(k), ent))
+
+    integrity_check(ent)
+
+    for comp in WORLD.components_for_entity(ent):
+        if (func := getattr(comp, "at_post_deserialize", None)):
+            func(ent)
 
     if register and (comp := WORLD.try_component(ent, COMPONENTS['EntityID'])):
         mudforge.GAME.register_entity(ent, comp)

@@ -48,13 +48,13 @@ class RemoveFromInventory:
         self.kwargs = kwargs
 
     async def execute(self):
-        if (i := WORLD.get_component(self.ent, COMPONENTS[self.rev_comp])):
-            inv = COMPONENTS[self.comp]
-            c = get_or_emplace(i.holder, inv)
+        if (i := WORLD.try_component(self.ent, COMPONENTS[self.rev_comp])):
+            c = get_or_emplace(i.holder, COMPONENTS[self.comp])
             c.inventory.remove(self.ent)
             if not c.inventory:
-                WORLD.remove_component(i.holder, inv)
-            WORLD.remove_component(self.ent, COMPONENTS[self.comp])
+                WORLD.remove_component(i.holder, c.__class__)
+            WORLD.remove_component(self.ent, i.__class__)
+            return True
 
     async def at_remove_item(self):
         pass
@@ -90,13 +90,12 @@ class UnequipFromEntity:
         self.kwargs = kwargs
 
     async def execute(self):
-        equipped = COMPONENTS[self.rev_comp]
-        if (i := WORLD.get_component(self.ent, equipped)):
-            e = WORLD.get_component(i.holder)
+        if (i := WORLD.try_component(self.ent, COMPONENTS[self.rev_comp])):
+            e = WORLD.component_for_entity(i.holder, COMPONENTS[self.comp])
             e.equipment.pop(i.slot, None)
             if not e.equipment:
-                WORLD.remove_component(i.holder, COMPONENTS[self.comp])
-            WORLD.remove_component(self.ent, equipped)
+                WORLD.remove_component(i.holder, e.__class__)
+            WORLD.remove_component(self.ent, i.__class__)
 
 
 class AddToRoom(AddToInventory):

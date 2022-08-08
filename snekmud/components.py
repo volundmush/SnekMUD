@@ -31,6 +31,8 @@ class _Save:
     def deserialize(cls, data: typing.Any, ent: Entity):
         return cls.from_dict(data)
 
+    def at_post_deserialize(self, ent):
+        pass
 
 @dataclass_json
 @dataclass
@@ -56,6 +58,12 @@ class PendingRemove(_NoSave):
 @dataclass
 class IsPersistent(_NoSave):
     pass
+
+
+@dataclass_json
+@dataclass
+class MetaTypes(_Save):
+    types: list[str] = field(default_factory=list)
 
 
 @dataclass_json
@@ -150,6 +158,10 @@ class Equipment(_Save):
             o.equipment[key] = snekmud.EQUIP_SLOTS[category][key](e)
         return o
 
+    def all(self):
+        for x in self.equipment.values():
+            yield x.item
+
 
 @dataclass_json
 @dataclass
@@ -225,6 +237,12 @@ class _SingleModifier(_Save):
             if (r := names.get(data, None)):
                 return cls(modifier=r)
         raise Exception(f"Cannot locate {str(cls)} {data}")
+
+    def all(self):
+        if self.modifier:
+            return [self.modifier]
+        return []
+
 
 
 class StringBase(_Save):
@@ -312,6 +330,7 @@ class ExDescriptions(_Save):
 @dataclass
 class HasCmdHandler(_NoSave):
     cmdhandler: "Parser" = None
+    cmdhandler_name: str = None
     session: "GameSession" = None
     entity: Entity = None
 
@@ -322,6 +341,7 @@ class HasCmdHandler(_NoSave):
         if self.cmdhandler:
             await self.cmdhandler.close()
         self.cmdhandler = p(self, **kwargs)
+        self.cmdhandler_name = cmdhandler
         await self.cmdhandler.start()
 
     async def process_input_text(self, data: str):

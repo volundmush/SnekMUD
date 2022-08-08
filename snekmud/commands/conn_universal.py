@@ -8,12 +8,36 @@ import re
 import snekmud
 import time
 import traceback
+import asyncio
 
 from .base import Command, ConnectionCommandHandler
 from snekmud.exceptions import CommandError
 from snekmud.db.accounts.models import Account
 
-class CmdPy(Command):
+from mudforge.startup import copyover
+import mudforge
+
+class _UniversalCmd(Command):
+    main_category = "connection"
+    sub_categories = ["universal"]
+
+class CmdCopyover(_UniversalCmd):
+    name = "@copyover"
+    aliases = ["@reload", "@hotboot", "@restart"]
+    @classmethod
+    async def access(cls, **kwargs) -> bool:
+        if (acc := kwargs.get("account")):
+            return acc.is_superuser
+        return False
+
+    async def execute(self):
+        for c in mudforge.NET_CONNECTIONS.values():
+            c.send_line("The universe unravels into chaos as a copyover commences.")
+        await asyncio.sleep(0.2)
+        copyover()
+
+
+class CmdPy(_UniversalCmd):
     """
     execute a snippet of python code
     Usage:
@@ -54,8 +78,6 @@ class CmdPy(Command):
     name = "@py"
     aliases = ["@!"]
     help_category = "System"
-    main_category = "connection"
-    sub_categories = ["universal"]
 
     @classmethod
     async def access(cls, **kwargs) -> bool:

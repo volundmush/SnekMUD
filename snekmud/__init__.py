@@ -24,3 +24,5 @@ COMMANDS = defaultdict(lambda: defaultdict(list))
 PY_DICT = dict()
 
 STATIC_TEXT = dict()
+
+METATYPE_INTEGRITY = defaultdict(list)
