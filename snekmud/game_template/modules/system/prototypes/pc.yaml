@@ -1,5 +1,0 @@
-SaveInRoom:
-  module: system
-  prototype: limbo
-  ent_id: limbo
-  coordinates: [0, 0, 0]

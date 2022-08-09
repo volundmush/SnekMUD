@@ -220,7 +220,23 @@ class SpaceMap:
 
 @dataclass_json
 @dataclass
-class _SingleModifier(_Save):
+class _ModBase(_Save):
+
+    @classmethod
+    def category(cls):
+        return cls.__name__
+
+    @classmethod
+    def find(cls, check):
+        if isinstance(check, int):
+            return snekmud.MODIFIERS_ID[cls.category()].get(check, None)
+        elif isinstance(check, str):
+            return snekmud.MODIFIERS_NAMES[cls.category()].get(check, None)
+
+
+@dataclass_json
+@dataclass
+class _SingleModifier(_ModBase):
     modifier: "Modifier"
 
     def export(self):
@@ -228,14 +244,8 @@ class _SingleModifier(_Save):
 
     @classmethod
     def deserialize(cls, data: typing.Any, ent):
-        names = snekmud.MODIFIERS_NAMES[cls.__name__]
-        ids = snekmud.MODIFIERS_ID[cls.__name__]
-        if (isinstance(data, int)):
-            if (r := ids.get(data, None)):
-                return cls(modifier=r)
-        if (isinstance(data, str)):
-            if (r := names.get(data, None)):
-                return cls(modifier=r)
+        if (found := cls.find(data)):
+            return cls(modifier=found(ent))
         raise Exception(f"Cannot locate {str(cls)} {data}")
 
     def all(self):
@@ -244,8 +254,30 @@ class _SingleModifier(_Save):
         return []
 
 
+@dataclass_json
+@dataclass
+class _MultiModifiers(_ModBase):
+    modifiers: dict[str, typing.Any] = field(default_factory=dict)
 
-class StringBase(_Save):
+    def should_save(self) -> bool:
+        return bool(self.modifiers)
+
+    def export(self):
+        return list(self.modifiers.keys())
+
+    @classmethod
+    def deserialize(cls, data: typing.Any, ent):
+        o = cls()
+        for i in data:
+            if (found := cls.find(i)):
+                m = found(ent)
+                o.modifiers[str(m)] = m
+
+    def all(self):
+        self.modifiers.values()
+
+
+class _StringBase(_Save):
     rich_cache = dict()
 
     def should_save(self) -> bool:
@@ -288,23 +320,23 @@ class StringBase(_Save):
         return cls(data)
 
 
-class Name(StringBase):
+class Name(_StringBase):
     pass
 
 
-class Description(StringBase):
+class Description(_StringBase):
     pass
 
 
-class ShortDescription(StringBase):
+class ShortDescription(_StringBase):
     pass
 
 
-class LongDescription(StringBase):
+class LongDescription(_StringBase):
     pass
 
 
-class ActionDescription(StringBase):
+class ActionDescription(_StringBase):
     pass
 
 
@@ -326,12 +358,18 @@ class ExDescriptions(_Save):
             o.ex_descriptions.append((Name(k), Description(d)))
         return o
 
+
+class HasSession(_NoSave):
+
+    def __init__(self, session):
+        self.session = session
+
+
 @dataclass_json
 @dataclass
 class HasCmdHandler(_NoSave):
     cmdhandler: "Parser" = None
     cmdhandler_name: str = None
-    session: "GameSession" = None
     entity: Entity = None
 
     async def set_cmdhandler(self, cmdhandler: str, **kwargs):
@@ -345,9 +383,29 @@ class HasCmdHandler(_NoSave):
         await self.cmdhandler.start()
 
     async def process_input_text(self, data: str):
-        if self.cmdhandler:
-            await self.cmdhandler.parse(data)
+        if not self.cmdhandler:
+            await self.set_cmdhandler("Play")
+        await self.cmdhandler.parse(data)
 
     def send(self, **kwargs):
-        if self.session:
-            self.session.handler.send(**kwargs)
+        if (sess := snekmud.WORLD.try_component(self.entity, snekmud.COMPONENTS["HasSession"])):
+            if sess.session:
+                sess.session.handler.send(**kwargs)
+
+    def at_post_deserialize(self, ent):
+        self.entity = ent
+
+
+class Receiver(_NoSave):
+    entity: Entity = None
+
+    def at_post_deserialize(self, ent):
+        self.entity = ent
+
+    def receive(self, msg: str, from_ent: Entity, msg_type=None, **kwargs):
+        self.send(msg)
+
+    def send(self, msg):
+        if (sess := snekmud.WORLD.try_component(self.entity, snekmud.COMPONENTS["HasSession"])):
+            if sess.session:
+                sess.session.handler.send(line=msg)

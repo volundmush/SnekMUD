@@ -194,6 +194,7 @@ class EntityCommandHandler(BaseCommandHandler):
 
     async def generate_kwargs(self):
         out = {"entity": self.owner.entity}
-        if self.owner.session:
-            out.update({"session": self.owner.session, "account": self.owner.session.account})
+        if (sess := snekmud.WORLD.try_component(self.owner.entity, snekmud.COMPONENTS["HasSession"])):
+            if sess.session:
+                out.update({"session": sess.session, "account": sess.session.account})
         return out

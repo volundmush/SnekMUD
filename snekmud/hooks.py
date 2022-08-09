@@ -70,6 +70,11 @@ def load_meta():
             snekmud.METATYPE_INTEGRITY[meta_type].append(import_from_module(p))
 
 
+def load_getters():
+    for path in mudforge.CONFIG.GETTER_PATHS:
+        snekmud.GETTERS.update(callables_from_module(path))
+
+
 def clean_gamesessions():
     from snekmud.db.gamesessions.models import GameSession
     GameSession.objects.all().delete()
@@ -83,6 +88,7 @@ def early_launch():
     load_equip()
     load_cmdhandlers()
     load_operations()
+    load_getters()
     load_meta()
 
     snekmud.PY_DICT["snekmud"] = snekmud

@@ -6,6 +6,6 @@ dataclasses-json
 orjson
 django
 django-idmap
-ruamel.yaml
 django-yamlfield
 argon2-cffi
+simpleeval

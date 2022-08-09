@@ -1,0 +1,6 @@
+{
+  "Prototype": ["system", "area"],
+  "Name": "Limbo",
+  "Description": "It's an empty void.",
+  "Map": ["system", "limbo"]
+}

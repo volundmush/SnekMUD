@@ -1,4 +1,5 @@
 from django.db import models
+import orjson
 from snekmud.db.idmap import models as idmodels
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
@@ -7,8 +8,7 @@ from django.utils import timezone
 from django.core import validators
 from mudforge import CLASSES
 from mudforge.utils import lazy_property
-from yamlfield.fields import YAMLField
-
+from snekmud.utils import OrJSONDecoder, OrJSONEncoder
 
 class SimpleUserNameValidator(validators.RegexValidator):
     regex = r"^\w+$"
@@ -56,7 +56,7 @@ class Account(idmodels.IdMapModel, AbstractBaseUser, PermissionsMixin):
 
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
 
-    extra = YAMLField(null=True, default=None)
+    extra = models.JSONField(null=True, default=None, encoder=OrJSONEncoder, decoder=OrJSONDecoder)
 
     class Meta:
         verbose_name = _("user")

@@ -4,7 +4,7 @@ from snekmud.db.players.models import PlayerCharacter
 from snekmud.typing import Entity
 from mudforge.utils import generate_name
 from snekmud import components as cm
-from snekmud.utils import read_data_file
+from snekmud.utils import read_json_file
 from snekmud.serialize import deserialize_entity
 from snekmud import WORLD, PLAYER_ID
 import logging
@@ -12,22 +12,33 @@ import logging
 
 class Prototype:
 
-    def __init__(self, module, name, data):
+    def __init__(self, module, name, path):
         self.module = module
         self.name = name
         self.entities = dict()
-        self.data = data
+        self.path = path
+        self.cached = None
+
+    def get(self):
+        if self.cached is None:
+            self.cached = read_json_file(self.path)
+            self.cached["Prototype"] = {"module_name": self.module.name, "prototype": self.name}
+        return self.cached
 
 
 class Module:
 
-    def __init__(self, name: str, path: Path, save_path: Path):
+    def __init__(self, name: str, path: Path, save_path: Path, meta: dict = None):
+        if meta is None:
+            meta = dict()
         self.name = sys.intern(name)
         self.maps: dict[str, Entity] = dict()
         self.prototypes: dict[str, Prototype] = dict()
         self.entities: dict[str, Entity] = dict()
         self.path = path
         self.save_path = save_path
+        self.meta = meta
+        self.sort_order = meta.pop("sort_order", 99999999999999)
 
     def __str__(self):
         return self.name
@@ -43,9 +54,9 @@ class Module:
         if not m_dir.is_dir():
             return
 
-        for d in [d for d in m_dir.iterdir() if d.is_file()]:
+        for d in [d for d in m_dir.iterdir() if d.is_file and d.name.lower().endswith(".json")]:
             key, ext = d.name.split(".", 1)
-            data = read_data_file(d)
+            data = read_json_file(d)
             if not data:
                 continue
             map_ent = WORLD.create_entity()
@@ -69,13 +80,9 @@ class Module:
         if not p_dir.is_dir():
             return
 
-        for d in [d for d in p_dir.iterdir() if d.is_file()]:
+        for d in [d for d in p_dir.iterdir() if d.is_file() and d.name.lower().endswith(".json")]:
             key, ext = d.name.split(".", 1)
-            data = read_data_file(d)
-            if not data:
-                continue
-            data["Prototype"] = {"module_name": self.name, "prototype": key}
-            self.prototypes[key] = Prototype(self, key, data)
+            self.prototypes[key] = Prototype(self, key, d)
 
     async def load_entities_initial(self):
         e_dir = self.path / "prototypes"
@@ -85,9 +92,9 @@ class Module:
         if not e_dir.is_dir():
             return
 
-        for d in [d for d in e_dir.iterdir() if d.is_file()]:
+        for d in [d for d in e_dir.iterdir() if d.is_file() and d.name.lower().endswith(".json")]:
             key, ext = d.name.split(".", 1)
-            data = read_data_file(d)
+            data = read_json_file(d)
             if not data:
                 continue
             e_ent = deserialize_entity(data)

@@ -3,7 +3,7 @@ import snekmud
 import time
 from snekmud.serialize import serialize_entity, deserialize_entity
 import logging
-
+from snekmud.utils import get_or_emplace
 
 class AccountHandler:
 
@@ -102,8 +102,9 @@ class GameSessionHandler:
         self.character = deserialize_entity(data)
         self.puppet = self.character
         c = self.character
-        cmd = snekmud.COMPONENTS["HasCmdHandler"](entity=c, session=self.owner)
-        snekmud.WORLD.add_component(c, cmd)
+
+        cmd = get_or_emplace(c, snekmud.COMPONENTS["HasCmdHandler"])
+        snekmud.WORLD.add_component(c, snekmud.COMPONENTS["HasSession"](session=self.owner))
         await cmd.set_cmdhandler("Play")
 
     async def deploy_character(self, copyover=None):
@@ -116,11 +117,11 @@ class GameSessionHandler:
         c = self.character
 
         await snekmud.OPERATIONS["AddToRoom"](c, loc_ent, move_type="login").execute()
-        await snekmud.OPERATIONS["MsgContents"](loc_ent, text="$You() has entered the game.", exclude=c, from_obj=c).execute()
+        await snekmud.OPERATIONS["MsgContents"](loc_ent, text="$You() $conj(has) entered the game.", exclude=c, from_obj=c).execute()
 
     async def possess(self, ent, msg=None):
         if msg is None:
-            display_name = await snekmud.OPERATIONS["GetDisplayName"](self.character, ent).execute()
+            display_name = snekmud.GETTERS["GetDisplayName"](self.character, ent).execute()
             msg = f"You become {display_name}"
         self.puppet = ent
         self.send(line=msg)
