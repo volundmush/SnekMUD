@@ -19,9 +19,7 @@ class Modifier:
         return cls.__name__
 
     def __str__(self):
-        if hasattr(self.__class__, "name"):
-            return self.name
-        return self.__class__.__name__
+        return getattr(self, "name", self.__class__.__name__)
 
     def __int__(self):
         return self.modifier_id
@@ -69,6 +67,10 @@ class SingleModifier(_ModHandler):
     Class used as a base for handling single Modifier types, like Race, Sensei, ItemType, RoomSector.
     """
     default = None
+
+    @lazy_property
+    def comp(self):
+        return get_or_emplace(self.ent, COMPONENTS[self.comp_name], modifier=self.default)
 
     def __init__(self, ent):
         super().__init__(ent)

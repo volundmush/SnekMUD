@@ -194,6 +194,7 @@ class GameSessionHandler:
     async def on_linkdead(self):
         await self.terminate_play()
 
+
 class PlayerCharacterHandler:
 
     def __init__(self, owner):

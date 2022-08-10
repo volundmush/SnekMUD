@@ -8,6 +8,7 @@ import time
 from mudrich.evennia import EvenniaToRich
 from rich.text import Text
 
+
 class GameConnection(OldConn):
     rich_kwargs = ["text", "line", "prompt"]
 
@@ -43,14 +44,12 @@ class GameConnection(OldConn):
         self.session = None
         self.time_last_activity = time.time()
 
-
-
     def write(self, b: str):
         """
         Gives this class the interface of IO Writing.
         """
         if not b.isspace():
-            self.conn.send_py(b.rstrip("\n"))
+            self.conn.send_python(b.rstrip("\n"))
 
     def flush(self):
         """
@@ -99,11 +98,10 @@ class GameConnection(OldConn):
                         kw_text = str(kw_text)
                     kw_text = EvenniaToRich(kw_text)
                 getattr(self, f"send_{kw}")(kw_text)
-        if (py := kwargs.pop("py", None)) is not None:
+        if (py := kwargs.pop("python", None)) is not None:
             if not hasattr(py, "__rich_console__"):
                 if not isinstance(py, str):
                     py = repr(py)
-                py = Text(py)
             self.send_python(py)
 
     def time_connected(self):

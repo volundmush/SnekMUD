@@ -39,10 +39,10 @@ def write_json_file(p: Path, data):
         f.write(orjson.dumps(data, option=orjson.OPT_INDENT_2))
 
 
-def get_or_emplace(ent: Entity, component: typing.Type) -> typing.Any:
+def get_or_emplace(ent: Entity, component: typing.Type, *args, **kwargs) -> typing.Any:
     if (c := WORLD.try_component(ent, component)):
         return c
-    c = component()
+    c = component(*args, **kwargs)
     WORLD.add_component(ent, c)
     if (func := getattr(c, "at_post_deserialize", None)):
         func(ent)

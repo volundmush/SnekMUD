@@ -4,6 +4,70 @@ from snekmud import COMPONENTS, WORLD, OPERATIONS, MODULES, GETTERS
 from rich.text import Text
 
 
+class DisplayInRoom:
+
+    def __init__(self, viewer, room, entity, **kwargs):
+        self.viewer = viewer
+        self.room = room
+        self.entity = entity
+        self.kwargs = kwargs
+
+    def execute(self):
+        if (long := WORLD.try_component(self.entity, COMPONENTS["RoomDescription"])) and long.plain:
+            return long.color
+        name = GETTERS["GetDisplayName"](self.viewer, self.entity).execute()
+        return f"{name} is here."
+
+
+class GetEquipment:
+
+    def __init__(self, entity, **kwargs):
+        self.entity = entity
+        self.kwargs = kwargs
+
+    def execute(self):
+        if (eq := WORLD.try_component(self.entity, COMPONENTS["Equipment"])):
+            return list(eq.all())
+        return []
+
+
+class VisibleEquipment:
+
+    def __init__(self, viewer: Entity, holder: Entity, **kwargs):
+        self.viewer = viewer
+        self.holder = holder
+        self.kwargs = kwargs
+
+    def execute(self):
+        return GETTERS["VisibleEntities"](self.viewer, GETTERS["GetEquipment"](self.holder).execute()).execute()
+
+
+class VisibleNearbyMeta:
+
+    def __init__(self, viewer: Entity, meta_type: str = "item", **kwargs):
+        self.viewer = viewer
+        self.meta_type = meta_type
+        self.kwargs = kwargs
+
+    def execute(self):
+        meta_get = GETTERS["GetMetaTypes"]
+
+        def check(ent):
+            if not (meta := meta_get(ent).execute()):
+                return False
+            return self.meta_type in meta.types
+
+        con_get = GETTERS["VisibleContents"]
+        out = list()
+        if (room := GETTERS["GetRoomLocation"](self.viewer).execute()):
+            room_contents = con_get(self.viewer, room).execute()
+            room_contents.remove(self.viewer)
+            out.extend(room_contents)
+        out.extend(con_get(self.viewer, self.viewer).execute())
+        out.extend(GETTERS["VisibleEquipment"](self.viewer, self.viewer).execute())
+        return [o for o in out if check(o)]
+
+
 class GetDisplayName:
 
     def __init__(self, viewer, target, rich=False, plain=False, **kwargs):

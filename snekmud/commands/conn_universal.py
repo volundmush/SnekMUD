@@ -17,9 +17,11 @@ from snekmud.db.accounts.models import Account
 from mudforge.startup import copyover
 import mudforge
 
+
 class _UniversalCmd(Command):
     main_category = "connection"
     sub_categories = ["universal"]
+
 
 class CmdCopyover(_UniversalCmd):
     name = "@copyover"

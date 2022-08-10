@@ -274,26 +274,25 @@ class _MultiModifiers(_ModBase):
                 o.modifiers[str(m)] = m
 
     def all(self):
-        self.modifiers.values()
+        if len(self.modifiers):
+            list(self.modifiers.values())
+        else:
+            return []
 
 
+RICH_CACHE = dict()
+
+
+@dataclass_json
+@dataclass
 class _StringBase(_Save):
-    rich_cache = dict()
+    color: str
 
     def should_save(self) -> bool:
-        return bool(self.plain)
-
-    def __init__(self, s: str):
-        self.color = sys.intern(s)
-        if self.color not in self.rich_cache:
-            self.rich_cache[self.color] = EvenniaToRich(s)
+        return bool(self.color)
 
     def __str__(self):
         return self.plain
-
-
-    def __repr__(self):
-        return f"<{self.__class__.__name__}: {self.color}>"
 
     @property
     def plain(self):
@@ -301,23 +300,17 @@ class _StringBase(_Save):
 
     @lazy_property
     def rich(self):
-        return self.rich_cache[self.color]
-
-    def __rich_console__(self, console, options):
-        return self.rich.__rich_console__(console, options)
-
-    def __rich_measure__(self, console, options):
-        return self.rich.__rich_measure__(console, options)
-
-    def render(self, console, end: str = ""):
-        return self.rich.render(console, end=end)
+        return RICH_CACHE[self.color]
 
     def export(self):
         return self.color
 
     @classmethod
     def deserialize(cls, data: typing.Any, ent):
-        return cls(data)
+        data = sys.intern(data)
+        if data not in RICH_CACHE:
+            RICH_CACHE[data] = EvenniaToRich(data)
+        return cls(color=data)
 
 
 class Name(_StringBase):
@@ -332,7 +325,7 @@ class ShortDescription(_StringBase):
     pass
 
 
-class LongDescription(_StringBase):
+class RoomDescription(_StringBase):
     pass
 
 
